@@ -8,6 +8,8 @@ zstyle -e ':z4h:ssh:*'                                   retrieve-history       
 zstyle    ':z4h:ssh:router'                              passthrough            yes
 zstyle    ':fzf-tab:*'                                   continuous-trigger     tab
 zstyle    ':zle:(up|down)-line-or-beginning-search'      leave-cursor           no
+zstyle    ':z4h:term-title:ssh'                          preexec                '%* | %n@%m: ${1//\%/%%}'
+zstyle    ':z4h:term-title:local'                        preexec                '%* | ${1//\%/%%}'
 
 z4h install romkatv/archive || return
 

@@ -6,9 +6,11 @@
         "sway/mode"
     ],
     "modules-right": [
+        "custom/progress",
         "custom/usbguard",
         "custom/yubikey",
         "custom/decrypted",
+        "custom/systemd",
         "custom/updates",
         "custom/mail",
         "custom/recording",
@@ -25,6 +27,11 @@
         "tray"
     ],
 
+    "custom/progress": {
+        "exec": "waybar-progress",
+        "return-type": "json",
+        "interval": 1
+    },
     "custom/usbguard": {
         "exec": "waybar-usbguard",
         "return-type": "json",
@@ -39,12 +46,17 @@
         "exec": "waybar-decrypted",
         "return-type": "json"
     },
+    "custom/systemd": {
+        "exec": "waybar-systemd",
+        "return-type": "json",
+        "interval": 10
+    },
     "custom/updates": {
-        "exec": "waybar-updates",
+        "exec": "waybar-updates show",
         "return-type": "json",
         "signal": 1,
-        "on-click-right": "pkill -RTMIN+1 -x waybar",
-        "interval": 1200
+        "on-click-right": "waybar-updates refresh",
+        "interval": "once"
     },
     "custom/mail": {
         "exec": "waybar-mail",
@@ -79,10 +91,18 @@
         "format": " {:%a, %d %b    %H:%M}"
     },
     "cpu": {
-        "format": " {usage}%"
+        "format": " {usage}%",
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
     },
     "memory": {
-        "format": " {}%"
+        "format": " {}%",
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
     },
     "backlight": {
         "format": "{icon} {percent}%",
