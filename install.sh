@@ -26,7 +26,7 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 exec 1> >(tee "stdout.log")
 exec 2> >(tee "stderr.log")
 
-REPO_URL="https://pkgbuild.com/~n1ete/repo/"
+#REPO_URL="https://pkgbuild.com/~n1ete/repo/"
 export SNAP_PAC_SKIP=y
 
 # Dialog
@@ -158,6 +158,7 @@ mkdir /mnt/var/cache/pacman/n1ete-local
 if [[ "${hostname}" == "home-"* ]]; then
     mkdir ~/repomount
     mount /dev/nvme0n1p2 ~/repomount
+    cp -r ~/repomount/home/n1ete/newlib/library /mnt/home/n1ete/library
     cp -r ~/repomount/home/n1ete/pacman/* /mnt/var/cache/pacman/n1ete-local/
     #wget -m -nH -np -q --show-progress --progress=bar:force --reject='index.html*' --cut-dirs=2 -P '/mnt/var/cache/pacman/n1ete-local' 'https://pkgbuild.com/~n1ete/repo/'
     #rename -- 'n1ete.' 'n1ete-local.' /mnt/var/cache/pacman/n1ete-local/*

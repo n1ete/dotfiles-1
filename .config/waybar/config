@@ -19,6 +19,7 @@
         "network",
         "custom/vpn",
         "cpu",
+        "temperature",
         "memory",
         "custom/tablet",
         "backlight",
@@ -145,5 +146,12 @@
             "default": ["", "", ""]
         },
         "on-click": "pavucontrol"
-    }
+    },
+    "temperature": {
+        "format": " {temperatureC}°C",
+        "thermal-zone": 0,
+        "critical-threshold": 60,
+        "format-critical": " {temperatureC}°C"
+        }
+
 }
