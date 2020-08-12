@@ -63,7 +63,7 @@ autostash = true
 autosquash = true
 
 [user]
-name = Maxim Baz
+name = n1ete
 useConfigOnly = true
 
 # vim:ft=ini
