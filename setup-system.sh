@@ -38,7 +38,7 @@ copy() {
     if [ -z "$reverse" ]; then
         [ -n "$2" ] && chmod "$2" "$dest_file"
     else
-        chown -R maximbaz "$dest_file"
+        chown -R n1ete "$dest_file"
     fi
     echo "$dest_file <= $orig_file"
 }
@@ -62,7 +62,8 @@ echo ""
 echo "=========================="
 echo "Setting up /etc configs..."
 echo "=========================="
-
+cp "$dotfiles_dir/nvidia/80-nvidia-pm.rules /lib/udev/rules.d/80-nvidia-pm.rules"
+cp "$dotfiles_dir/nvidia/nvidia.conf /etc/modprobe.d/nvidia.conf"
 copy "etc/bluetooth/main.conf"
 copy "etc/conf.d/snapper"
 copy "etc/default/grub-btrfs/config"
@@ -140,15 +141,15 @@ if [ ! -s "/etc/usbguard/rules.conf" ]; then
     echo >&2 "=== Remember to set usbguard rules: usbguard generate-policy >! /etc/usbguard/rules.conf"
 fi
 
-if [[ $HOSTNAME == home-* ]]; then
-    systemctl_enable_start "backup-repo@pkgbuild.timer"
-
-    if [ -d "/home/maximbaz/.ccnet" ]; then
-        systemctl_enable_start "seaf-cli@maximbaz.service"
-    else
-        echo >&2 "=== Seafile is not initialized, skipping..."
-    fi
-fi
+#if [[ $HOSTNAME == home-* ]]; then
+#    systemctl_enable_start "backup-repo@pkgbuild.timer"
+#
+#    if [ -d "/home/n1ete/.ccnet" ]; then
+#        systemctl_enable_start "seaf-cli@n1ete.service"
+#    else
+#        echo >&2 "=== Seafile is not initialized, skipping..."
+#    fi
+#fi
 
 echo ""
 echo "==============================="

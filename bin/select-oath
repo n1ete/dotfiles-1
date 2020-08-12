@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -euo pipefail
+
+ykman info > /dev/null
+
+SELECTED=$(ykman oath list | wofi -dmenu)
+if [ -n "${SELECTED}" ]; then
+  ykman oath code ${SELECTED} | awk '{ print $NF }' |  xsel -b
+fi' }' ]

@@ -18,7 +18,7 @@
 # Run installation:
 #
 # - Connect to wifi via: `# wifi-menu`
-# - Run: `# bash <(curl -sL https://git.io/maximbaz-install)`
+# - Run: `# bash <(curl -sL https://git.io/n1ete-install)`
 
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
@@ -26,7 +26,7 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 exec 1> >(tee "stdout.log")
 exec 2> >(tee "stderr.log")
 
-REPO_URL="https://pkgbuild.com/~maximbaz/repo/"
+REPO_URL="https://pkgbuild.com/~n1ete/repo/"
 export SNAP_PAC_SKIP=y
 
 # Dialog
@@ -153,36 +153,36 @@ chmod 000 /mnt/crypto_keyfile.bin
 echo -n ${password} | cryptsetup luksAddKey ${part_root} /mnt/crypto_keyfile.bin
 
 echo -e "\n### Configuring custom repo"
-mkdir /mnt/var/cache/pacman/maximbaz-local
+mkdir /mnt/var/cache/pacman/n1ete-local
 
 if [[ "${hostname}" == "home-"* ]]; then
-    wget -m -nH -np -q --show-progress --progress=bar:force --reject='index.html*' --cut-dirs=2 -P '/mnt/var/cache/pacman/maximbaz-local' 'https://pkgbuild.com/~maximbaz/repo/'
-    rename -- 'maximbaz.' 'maximbaz-local.' /mnt/var/cache/pacman/maximbaz-local/*
+    wget -m -nH -np -q --show-progress --progress=bar:force --reject='index.html*' --cut-dirs=2 -P '/mnt/var/cache/pacman/n1ete-local' 'https://pkgbuild.com/~n1ete/repo/'
+    rename -- 'n1ete.' 'n1ete-local.' /mnt/var/cache/pacman/n1ete-local/*
 
     cat >> /etc/pacman.conf << EOF
-[maximbaz-local]
+[n1ete-local]
 SigLevel = Required
-Server = file:///mnt/var/cache/pacman/maximbaz-local
+Server = file:///mnt/var/cache/pacman/n1ete-local
 
 [options]
 CacheDir = /var/cache/pacman/pkg
-CacheDir = /mnt/var/cache/pacman/maximbaz-local
+CacheDir = /mnt/var/cache/pacman/n1ete-local
 EOF
 
 else
     cat >> /etc/pacman.conf << EOF
-[maximbaz]
-SigLevel = Required
-Server = https://pkgbuild.com/~maximbaz/repo/
+#[n1ete]
+#SigLevel = Required
+#Server = https://pkgbuild.com/~n1ete/repo/
 
-[options]
-CacheDir = /var/cache/pacman/pkg
+#[options]
+#CacheDir = /var/cache/pacman/pkg
 EOF
 
 fi
 
 echo -e "\n### Installing packages"
-pacstrap -i /mnt maximbaz
+pacstrap -i /mnt n1ete
 
 echo -e "\n### Generating base config files"
 ln -sfT dash /mnt/usr/bin/sh
@@ -190,11 +190,11 @@ echo "FONT=$font" > /mnt/etc/vconsole.conf
 genfstab -U /mnt >> /mnt/etc/fstab
 echo "${hostname}" > /mnt/etc/hostname
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
-echo "en_DK.UTF-8 UTF-8" >> /mnt/etc/locale.gen
-ln -sf /usr/share/zoneinfo/Europe/Copenhagen /mnt/etc/localtime
+echo "de_DE.UTF-8 UTF-8" >> /mnt/etc/locale.gen
+ln -sf /usr/share/zoneinfo/Europe/Berlin /mnt/etc/localtime
 arch-chroot /mnt locale-gen
 cat << EOF > /mnt/etc/mkinitcpio.conf
-MODULES=()
+MODULES=(battery nvme)
 BINARIES=()
 FILES=(/crypto_keyfile.bin)
 HOOKS=(base consolefont udev autodetect modconf block encrypt filesystems keyboard)
@@ -211,7 +211,7 @@ cat << EOF > /mnt/etc/default/grub
 GRUB_DEFAULT=0
 GRUB_TIMEOUT=5
 GRUB_DISTRIBUTOR="Arch"
-GRUB_CMDLINE_LINUX_DEFAULT="quiet mem_sleep_default=deep"
+GRUB_CMDLINE_LINUX_DEFAULT="mem_sleep_default=deep net.ifnames=0 i915.enable_guc=2 i915.enable_fbc=1 i915.enable_psr=2 i915.enable_dpcd_backlight=1 i915.enable_rc6=2"
 GRUB_CMDLINE_LINUX="cryptdevice=${part_root}:luks:allow-discards"
 GRUB_PRELOAD_MODULES="part_gpt part_msdos"
 GRUB_ENABLE_CRYPTODISK=y
@@ -241,7 +241,7 @@ echo "$user:$password" | chpasswd --root /mnt
 arch-chroot /mnt passwd -dl root
 
 echo -e "\n### Setting permissions on the custom repo"
-arch-chroot /mnt chown -R "$user:$user" /var/cache/pacman/maximbaz-local/
+arch-chroot /mnt chown -R "$user:$user" /var/cache/pacman/n1ete-local/
 
 echo -e "\n### Setting up Secure Boot for GRUB with custom keys"
 echo MB | arch-chroot /mnt cryptboot-efikeys create
@@ -249,7 +249,7 @@ arch-chroot /mnt cryptboot-efikeys enroll
 arch-chroot /mnt cryptboot-efikeys sign /boot/efi/EFI/arch/grubx64.efi
 
 echo -e "\n### Cloning dotfiles"
-arch-chroot /mnt sudo -u $user bash -c 'git clone --recursive https://github.com/maximbaz/dotfiles.git ~/.dotfiles'
+arch-chroot /mnt sudo -u $user bash -c 'git clone --recursive https://github.com/n1ete/dotkob.git ~/.dotfiles'
 
 echo -e "\n### Running initial setup"
 arch-chroot /mnt /home/$user/.dotfiles/setup-system.sh

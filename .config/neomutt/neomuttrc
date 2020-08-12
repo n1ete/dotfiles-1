@@ -1,19 +1,19 @@
-set realname = "Maxim Baz"
-set from = "PLACEHOLDER@maximbaz.com"
-alternates @maximbaz.com
+set realname = "n1ete"
+set from = "PLACEHOLDER@gmail.com"
+alternates @gmail.com
 set use_domain = no
-set hostname = maximbaz.com
+set hostname = gmail.com
 set reverse_name = yes
 
 set sig_on_top = yes
 set signature = ~/.config/neomutt/signature
 
-set sendmail = "/usr/bin/msmtp -a maximbaz"
+set sendmail = "/usr/bin/msmtp -a gmail"
 set use_envelope_from = yes
 set edit_headers = yes
 set user_agent = no
 
-set folder = "~/.mail/maximbaz"
+set folder = "~/library/mail/gmail"
 set mbox_type = Maildir
 set ssl_force_tls = yes
 set spoolfile = "+INBOX"
@@ -33,7 +33,7 @@ subscribe arch-announce@archlinux.org arch-dev-public@archlinux.org arch-events@
 set sort = threads
 set sort_aux = last-date-received
 
-set pgp_default_key = 0xEB4F9E5A60D32232BB52150C12C87A28FEAC6B20
+set pgp_default_key = 0x4AA5A5A3602162EF1459D24D3129FAE7E854EDEF
 set pgp_auto_decode = yes
 set crypt_use_pka = yes
 

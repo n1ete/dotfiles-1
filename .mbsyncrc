@@ -1,19 +1,75 @@
-IMAPStore maximbaz-remote
-Host mail.maximbaz.com
-User me@maximbaz.com
-PassCmd "gpg --quiet --decrypt ~/.cache/mail.maximbaz.com.gpg"
-SSLType IMAPS
+#########
+# Gmail #
+#########
 
-MaildirStore maximbaz-local
-Path ~/.mail/maximbaz/
-Inbox ~/.mail/maximbaz/INBOX
-SubFolders Verbatim
+IMAPAccount gmail
+    Host imap.gmail.com
+    User schadensregulierung@gmail.com
+    PassCmd "gpg --quiet --decrypt ~/.cache/mail.schadensregulierung.gpg"
+    SSLType IMAPS
+    CertificateFile /etc/ssl/certs/ca-certificates.crt
+    AuthMechs LOGIN
 
-Channel maximbaz
-Master :maximbaz-remote:
-Slave :maximbaz-local:
-Create Both
-Expunge Both
-CopyArrivalDate yes
-Patterns *
-SyncState *
+IMAPStore gmail-remote
+    Account gmail
+
+MaildirStore gmail-local
+    Path ~/library/mail/gmail/
+    Inbox ~/library/mail/gmail/INBOX
+    SubFolders Verbatim
+
+Channel gmail-inbox
+    Master :gmail-remote:
+    Slave :gmail-local:
+    Create Both
+    Expunge Both
+    CopyArrivalDate yes
+    Patterns "INBOX"
+ #   Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Drafts"
+    SyncState *
+
+Channel gmail-sent
+    Master :gmail-remote:"[Google Mail]/Sent Mail"
+    Slave :gmail-local:sent
+    Create Both
+    Expunge Both
+    CopyArrivalDate yes
+    SyncState *
+
+Channel gmail-trash
+    Master :gmail-remote:"[Google Mail]/Trash"
+    Slave  :gmail-local:trash
+    Create Both
+    Syncstate *
+
+#Channel gmail-social
+#    Master :gmail-remote:"[Google Mail]/Social"
+#    Slave  :gmail-local:social
+#    Create Both
+#    Syncstate *
+
+Channel gmail-archive
+    Master :gmail-remote:"[Google Mail]/All Mail"
+    Slave  :gmail-local:archive
+    Create Both
+    Syncstate *
+
+Channel gmail-drafts
+    Master ":gmail-remote:[Google Mail]/Drafts"
+    Slave :gmail-local:drafts
+    Create Both
+    SyncState *
+
+Channel gmail-flagged
+    Master ":gmail-remote:[Google Mail]/Starred"
+    Slave :gmail-local:flagged
+    Create Both
+    SyncState *
+
+Group gmail
+    Channel gmail-inbox
+    Channel gmail-drafts
+    Channel gmail-sent
+    Channel gmail-flagged
+    Channel gmail-trash
+    Channel gmail-archive

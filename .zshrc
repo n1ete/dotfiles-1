@@ -5,11 +5,20 @@ zstyle    ':z4h:autosuggestions'                         forward-char           
 zstyle    ':z4h:ssh:*'                                   ssh-command            command ssh
 zstyle    ':z4h:ssh:*'                                   send-extra-files       '~/.zsh-aliases'
 zstyle -e ':z4h:ssh:*'                                   retrieve-history       'reply=($ZDOTDIR/.zsh_history.${(%):-%m}:$z4h_ssh_host)'
-zstyle    ':z4h:ssh:router'                              passthrough            yes
 zstyle    ':fzf-tab:*'                                   continuous-trigger     tab
 zstyle    ':zle:(up|down)-line-or-beginning-search'      leave-cursor           no
 zstyle    ':z4h:term-title:ssh'                          preexec                '%* | %n@%m: ${1//\%/%%}'
 zstyle    ':z4h:term-title:local'                        preexec                '%* | ${1//\%/%%}'
+zstyle    ':z4h:ssh:jukebot'     passthrough             yes
+zstyle    ':z4h:ssh:planet01'     passthrough            yes
+zstyle    ':z4h:ssh:talk'     passthrough                yes
+zstyle    ':z4h:ssh:probe'     passthrough               yes
+zstyle    ':z4h:ssh:holo01'     passthrough              yes
+zstyle    ':z4h:ssh:bruno'     passthrough               yes
+zstyle    ':z4h:ssh:vbox'     passthrough                yes
+zstyle    ':z4h:ssh:corekeep'     passthrough            yes
+zstyle    ':z4h:ssh:keep'     passthrough                yes
+zstyle    ':z4h:ssh:mufu'     passthrough                yes
 
 z4h install romkatv/archive || return
 

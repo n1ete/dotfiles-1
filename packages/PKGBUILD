@@ -1,9 +1,9 @@
-pkgname='maximbaz'
+pkgname='n1ete'
 pkgver=2.12.0
 pkgrel=1
-pkgdesc='Packages installed by maximbaz'
+pkgdesc='Packages installed by n1ete'
 arch=('any')
-url='https://github.com/maximbaz/dotfiles'
+url='https://github.com/n1ete/dotkob'
 license=('MIT')
 source=('30-font-aliases.conf'
     '75-joypixels.conf'
@@ -145,13 +145,13 @@ depends=(
     'systembus-notify'
 
     # hardware
-    'dell-command-configure'
     'fwupd'
     'tlp'
     'dmidecode'
     'upower'
     'acpi'
     'droidcam'
+    'nvidia-dkms'
 
     # audio
     'pulseaudio'
@@ -299,7 +299,6 @@ depends=(
     'dmenu-term'
     'fzf'
     'calibre'
-    'spotify'
     'krita'
     'libqalculate'
     'libreoffice-fresh'

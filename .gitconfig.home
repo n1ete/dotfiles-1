@@ -5,7 +5,7 @@ path = ~/.gitconfig.common
 gpgsign = true
 
 [user]
-email = git@maximbaz.com
-signingkey = 8053EB88879A68CB4873D32B011FDC52DA839335
+email = schadensregulierung@gmail.com
+signingkey = 2EDC3B26CA9E3C33C174377F0170A7594
 
 # vim:ft=ini

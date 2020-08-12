@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. /home/maximbaz/.antigen/bundles/rupa/z/z.sh
+. /home/n1ete/.antigen/bundles/rupa/z/z.sh
 
 printf "jump to: "
 read -r query

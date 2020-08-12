@@ -3,9 +3,9 @@ tls on
 tls_starttls off
 port 465
 
-account maximbaz
-host mail.maximbaz.com
+account gmail
+host smtp.gmail.com
 auth on
-user me@maximbaz.com
-passwordeval gpg --quiet --decrypt ~/.cache/mail.maximbaz.com.gpg
+user schadensregulierung@gmail.com
+passwordeval gpg --quiet --decrypt ~/.cache/mail.schadensregulierung.gpg
 logfile ~/.cache/msmtp.log

@@ -3,7 +3,7 @@
 set -e
 exec 2> >(while read line; do echo -e "\e[01;31m$line\e[0m"; done)
 
-MY_GPG_KEY_ID="12C87A28FEAC6B20"
+MY_GPG_KEY_ID="3129FAE7E854EDEF"
 
 dotfiles_dir="$(
     cd "$(dirname "$0")"
@@ -134,7 +134,7 @@ else
     systemctl_enable_start "yubikey-touch-detector.service"
 
     if [[ $HOSTNAME == home-* ]]; then
-        if [ -d "$HOME/.mail" ]; then
+        if [ -d "$HOME/library/mail" ]; then
             systemctl_enable_start "mbsync.timer"
             systemctl_enable_start "goimapnotify@personal.service"
         else
@@ -157,7 +157,7 @@ file --compile --magic-file "$HOME/.magic"
 
 if ! gpg -k | grep "$MY_GPG_KEY_ID" > /dev/null; then
     echo "Importing my public PGP key"
-    curl -s https://maximbaz.com/pgp_keys.asc | gpg --import
+    curl -s https://keys.openpgp.org/vks/v1/by-fingerprint/4AA5A5A3602162EF1459D24D3129FAE7E854EDEF | gpg --import
     gpg --trusted-key "$MY_GPG_KEY_ID" > /dev/null
 fi
 
@@ -170,7 +170,7 @@ else
     if [ ! -s "$HOME/.config/Yubico/u2f_keys" ]; then
         echo "Configuring YubiKey for passwordless sudo (touch it now)"
         mkdir -p "$HOME/.config/Yubico"
-        pamu2fcfg -umaximbaz > "$HOME/.config/Yubico/u2f_keys"
+        pamu2fcfg -un1ete > "$HOME/.config/Yubico/u2f_keys"
     fi
 fi
 
@@ -193,7 +193,7 @@ echo "Ignoring further changes to often changing config"
 git update-index --assume-unchanged ".config/transmission/settings.json"
 
 echo "Configure repo-local git settings"
-git config user.email "git@maximbaz.com"
-git config user.signingkey "8053EB88879A68CB4873D32B011FDC52DA839335"
+git config user.email "schadensregulierung@gmail.com"
+git config user.signingkey "F3A2EDC3B26CA9E3C33C174377F0170A7594"
 git config commit.gpgsign true
-git remote set-url origin "git@github.com:maximbaz/dotfiles.git"
+git remote set-url origin "git@github.com:n1ete/dotkob.git"

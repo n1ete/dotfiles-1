@@ -12,12 +12,12 @@ export GPG_TTY=$TTY
 export SYSTEMD_LESS=FRXMK
 
 export GOPATH="$HOME/.go"
-export GOPRIVATE="bitbucket.org/maersk-analytics"
+#export GOPRIVATE="bitbucket.org/maersk-analytics"
 
 export NNN_TRASH=1
 export NNN_COLORS='4235'
 export NNN_PLUG='j:jump;r:remove;c:croc;d:dragdrop;'
-export NNN_BMS='d:~/Downloads;n:/home/nzbget/dst;N:/home/nzbget/nzb;r:/run/media/maximbaz;'
+export NNN_BMS='d:~/Downloads;n:/home/nzbget/dst;N:/home/nzbget/nzb;r:/run/media/n1ete;'
 export NNN_OPTS='Aer'
 
 export PASSWORD_STORE_CHARACTER_SET='a-zA-Z0-9~!@#$%^&*()-_=+[]{};:,.<>?'
