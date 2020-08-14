@@ -20,8 +20,8 @@ refresh: ## Refresh the backup lists
 .PHONY: publish
 publish: ## Publish the meta-package in the local repo
 	gpg --detach-sign --yes *.pkg.tar.zst
-	repo-add -s /var/cache/pacman/n1ete-local/n1ete-local.db.tar *.pkg.tar.zst
-	cp *.pkg.tar* /var/cache/pacman/n1ete-local/
+	repo-add -s /var/cache/pacman/maximbaz-local/maximbaz-local.db.tar *.pkg.tar.zst
+	cp *.pkg.tar* /var/cache/pacman/maximbaz-local/
 
 .PHONY: clean
 clean: ## Cleanup
