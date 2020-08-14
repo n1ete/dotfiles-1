@@ -16,4 +16,7 @@ export WLR_DRM_NO_MODIFIERS=1
 
 export PATH="$HOME/bin:$PATH"
 
-[[ -z $DISPLAY && "$(tty)" == "/dev/tty1" ]] && systemd-cat -t sway sway --my-next-gpu-wont-be-nvidia
+if [[ -z $DISPLAY && "$(tty)" == "/dev/tty1" ]]; then
+    systemd-cat -t sway sway --my-next-gpu-wont-be-nvidia
+    systemctl --user stop sway-session.target
+fi
