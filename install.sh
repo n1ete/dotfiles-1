@@ -171,12 +171,12 @@ EOF
 
 else
     cat >> /etc/pacman.conf << EOF
-#[n1ete]
-#SigLevel = Required
-#Server = https://pkgbuild.com/~n1ete/repo/
+[maximbaz]
+SigLevel = Required
+Server = https://pkgbuild.com/~maximbaz/repo/
 
-#[options]
-#CacheDir = /var/cache/pacman/pkg
+[options]
+CacheDir = /var/cache/pacman/pkg
 EOF
 
 fi
