@@ -19,6 +19,8 @@
 #
 # - Connect to wifi via: `# wifi-menu`
 # - Run: `# bash <(curl -sL https://git.io/maximbaz-install)`
+pacman -Sy
+pacman -S git wget dialog
 
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
