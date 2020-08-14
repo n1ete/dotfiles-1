@@ -221,12 +221,12 @@ pac() {
     done
     if (( is_removal )); then
         echo "\nCleaning up AUR repo..."
-        repo-remove -s /var/cache/pacman/n1ete-local/n1ete-local.db.tar "$@"
+        repo-remove -s /var/cache/pacman/maximbaz-local/maximbaz-local.db.tar "$@"
     fi
 
     echo "\nCleaning up repo cache..."
-    sudo -E paccache -vr -c /var/cache/pacman/pkg -c /var/cache/pacman/n1ete-local
-    sudo -E paccache -vruk0 -c /var/cache/pacman/pkg -c /var/cache/pacman/n1ete-local
+    sudo -E paccache -vr -c /var/cache/pacman/pkg -c /var/cache/pacman/maximbaz-local
+    sudo -E paccache -vruk0 -c /var/cache/pacman/pkg -c /var/cache/pacman/maximbaz-local
 
     refresh-waybar-updates
     rehash
@@ -303,7 +303,7 @@ aurb() {
 
 post_aur() {
     find ~/.cache/aurutils/sync -name .git -execdir git clean -fx \; >/dev/null
-    find /var/cache/pacman/n1ete-local -group root -delete >/dev/null
+    find /var/cache/pacman/maximbaz-local -group root -delete >/dev/null
 }
 
 refresh-waybar-updates() {
