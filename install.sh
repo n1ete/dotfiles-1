@@ -26,7 +26,7 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 exec 1> >(tee "stdout.log")
 exec 2> >(tee "stderr.log")
 
-REPO_URL="https://pkgbuild.com/~n1ete/repo/"
+REPO_URL="https://pkgbuild.com/~maximbaz/repo/"
 export SNAP_PAC_SKIP=y
 
 # Dialog
