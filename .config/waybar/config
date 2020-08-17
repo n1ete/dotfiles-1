@@ -6,6 +6,7 @@
         "sway/mode"
     ],
     "modules-right": [
+        "custom/fwupd",
         "custom/progress",
         "custom/usbguard",
         "custom/yubikey",
@@ -24,10 +25,20 @@
         "custom/tablet",
         "backlight",
         "battery",
+        "custom/waybar-calendar",
         "clock",
         "tray"
     ],
-
+    "custom/calendar": {
+        "exec": "waybar-calendar",
+        "return-type": "json",
+        "interval": 3600
+    },
+    "custom/fwupd": {
+        "exec": "waybar-fwupd",
+        "return-type": "json",
+        "interval": 43200
+    },
     "custom/progress": {
         "exec": "waybar-progress",
         "return-type": "json",

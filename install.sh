@@ -152,6 +152,9 @@ dd bs=512 count=4 if=/dev/urandom of=/mnt/crypto_keyfile.bin
 chmod 000 /mnt/crypto_keyfile.bin
 echo -n ${password} | cryptsetup luksAddKey ${part_root} /mnt/crypto_keyfile.bin
 
+echo -e "\n### Adding blackarch repo"
+curl -sL https://blackarch.org/strap.sh | bash
+
 echo -e "\n### Configuring custom repo"
 mkdir /mnt/var/cache/pacman/maximbaz-local
 
@@ -160,20 +163,26 @@ if [[ "${hostname}" == "home-"* ]]; then
     rename -- 'maximbaz.' 'maximbaz-local.' /mnt/var/cache/pacman/maximbaz-local/*
 
     cat >> /etc/pacman.conf << EOF
-[maximbaz-local]
+[maximbaz]
+SigLevel = Required
+Server = https://pkgbuild.com/~maximbaz/repo/
+Usage = Install Sync
+
+[n1ete-local]
 SigLevel = Optional
-Server = file:///mnt/var/cache/pacman/maximbaz-local
+Server = file:///mnt/var/cache/pacman/n1ete-local
 
 [options]
 CacheDir = /var/cache/pacman/pkg
-CacheDir = /mnt/var/cache/pacman/maximbaz-local
+CacheDir = /mnt/var/cache/pacman/n1ete-local
 EOF
 
 else
     cat >> /etc/pacman.conf << EOF
 [maximbaz]
-SigLevel = Required
 Server = https://pkgbuild.com/~maximbaz/repo/
+SigLevel = Required
+Usage = Install Sync
 
 [options]
 CacheDir = /var/cache/pacman/pkg
@@ -241,7 +250,7 @@ echo "$user:$password" | chpasswd --root /mnt
 arch-chroot /mnt passwd -dl root
 
 echo -e "\n### Setting permissions on the custom repo"
-arch-chroot /mnt chown -R "$user:$user" /var/cache/pacman/maximbaz-local/
+arch-chroot /mnt chown -R "$user:$user" /var/cache/pacman/n1ete-local/
 
 echo -e "\n### Setting up Secure Boot for GRUB with custom keys"
 echo MB | arch-chroot /mnt cryptboot-efikeys create

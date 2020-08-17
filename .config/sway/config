@@ -3,7 +3,7 @@ font pango: Taskbar, Cantarell 9
 
 input type:keyboard {
     xkb_layout de,de-hyper
-    xkb_options grp:shifts_toggle,compose:ralt,caps:hyper,numpad:mac
+    xkb_options grp:shifts_toggle,caps:hyper,numpad:mac
     xkb_numlock disable
     xkb_variant nodeadkeys
     xkb_model pc105
@@ -12,6 +12,7 @@ input type:keyboard {
 input type:touchpad {
     natural_scroll enabled
     #tap enabled
+    dwt enabled
 }
 
 seat * hide_cursor 10000
