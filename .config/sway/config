@@ -2,7 +2,7 @@
 font pango: Taskbar, Cantarell 9
 
 input type:keyboard {
-    xkb_layout de-hyper,de
+    xkb_layout de,de-hyper
     xkb_options grp:shifts_toggle,compose:ralt,caps:hyper,numpad:mac
     xkb_numlock disable
     xkb_variant nodeadkeys
@@ -223,6 +223,7 @@ bindsym --to-code {
     $hyper+Left   exec playerctl --player playerctld previous
     $hyper+Right  exec playerctl --player playerctld next
 
+    XF86AudioMicMute     exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
     XF86AudioMute        exec pamixer -t
     XF86AudioRaiseVolume exec pamixer -i 5
     XF86AudioLowerVolume exec pamixer -d 5
