@@ -4,19 +4,20 @@ font pango: Taskbar, Cantarell 9
 input type:keyboard {
     xkb_layout de-hyper,de
     xkb_options grp:shifts_toggle,compose:ralt,caps:hyper,numpad:mac
-    xkb_numlock enable
+    xkb_numlock disable
+    xkb_variant nodeadkeys
+    xkb_model pc105
 }
 
 input type:touchpad {
     natural_scroll enabled
-    tap enabled
+    #tap enabled
 }
 
 seat * hide_cursor 10000
 
-output * {
-    bg "#222222" solid_color
-}
+####set himawaripy background with black background
+output "*" bg "/home/n1ete/.cache/himawaripy/himawari-*.png" fit #000000
 
 # Gaps
 gaps inner 5
@@ -30,6 +31,9 @@ hide_edge_borders --i3 none
 # Disable cursor jumping
 mouse_warping none
 focus_follows_mouse no
+
+#Switch with same key to precedent workspace
+workspace_auto_back_and_forth yes
 
 # Workspaces
 workspace_layout tabbed

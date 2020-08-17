@@ -96,6 +96,8 @@ link ".config/systemd/user/systembus-notify.service"
 link ".config/systemd/user/udiskie.service"
 link ".config/systemd/user/waybar.service"
 link ".config/systemd/user/waybar-updates.service"
+link ".config/systemd/user/himawaripy.service"
+link ".config/systemd/user/himawaripy.timer"
 link ".config/systemd/user/waybar-updates.timer"
 link ".config/tig"
 link ".config/transmission/settings.json"
@@ -129,8 +131,10 @@ else
     systemctl_enable_start "waybar.service"
     systemctl_enable_start "waybar-updates.timer"
     systemctl_enable_start "wl-clipboard-manager.service"
+ #   systemctl_enable_start "wluma-als-emulator.service"
     systemctl_enable_start "wluma.service"
     systemctl_enable_start "yubikey-touch-detector.service"
+    systemctl_enable_start "himawaripy.timer"
 
     if [[ $HOSTNAME == home-* ]]; then
         if [ -d "$HOME/library/mail" ]; then
@@ -193,6 +197,6 @@ git update-index --assume-unchanged ".config/transmission/settings.json"
 
 echo "Configure repo-local git settings"
 git config user.email "schadensregulierung@gmail.com"
-git config user.signingkey "F3A2EDC3B26CA9E3C33C174377F0170A7594"
-git config commit.gpgsign true
+git config user.signingkey "6467BFFBCB0E526C681A653DCB6847AA9E4DD239"
+git config commit.gpgsign false
 git remote set-url origin "git@github.com:n1ete/dotkob.git"

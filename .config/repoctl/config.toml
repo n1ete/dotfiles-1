@@ -3,7 +3,7 @@
 # repo is the full path to the repository that will be managed by repoctl.
 # The packages that belong to the repository are assumed to lie in the
 # same folder.
-repo = "/var/cache/pacman/maximbaz-local/maximbaz-local.db.tar"
+repo = "/var/cache/pacman/n1ete-local/n1ete-local.db.tar.gz"
 
 # add_params is the set of parameters that will be passed to repo-add
 # when it is called. Specify one time for each parameter.
@@ -17,12 +17,19 @@ rm_params = ["-s"]
 # with AUR related tasks, such as determining if there is an update or not.
 #ignore_aur = []
 
+# require_signature prevents packages from being added that do not
+# also have a signature file.
+#require_signature = false
+
 # backup specifies whether package files should be backed up or deleted.
 # If it is set to false, then obsolete package files are deleted.
 backup = true
 
 # backup_dir specifies which directory backups are stored in.
-# If a relative path is given, then
+# - If a relative path is given, then it is interpreted as relative to
+#   the repository directory.
+# - If the path here resolves to the same as repo, then obsolete packages
+#   are effectively ignored by repoctl, if backup is true.
 backup_dir = ""
 
 # interactive specifies that repoctl should ask before doing anything

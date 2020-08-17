@@ -1,0 +1,10 @@
+[Unit]
+Description=Ambient Light Sensor Emulator for Wluma
+Before=wluma.service
+
+[Service]
+ExecStart=/usr/bin/wluma-als-emulator
+Restart=always
+
+[Install]
+WantedBy=default.target

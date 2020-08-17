@@ -177,6 +177,7 @@ depends=(
     'light'
     'slurp'
     'wluma'
+    'wluma-als-emulator'
     'vulkan-intel'
     'vulkan-headers'
     'flashfocus-git'

@@ -2,10 +2,11 @@
 path = ~/.gitconfig.common
 
 [commit]
-gpgsign = true
+#gpgsign = true
 
 [user]
 email = schadensregulierung@gmail.com
-signingkey = 2EDC3B26CA9E3C33C174377F0170A7594
-
+#signingkey = 2EDC3B26CA9E3C33C174377F0170A7594
+#signingkey = 6467BFFBCB0E526C681A653DCB6847AA9E4DD239
+#signingkey = 3129FAE7E854EDEF
 # vim:ft=ini
