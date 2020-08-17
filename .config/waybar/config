@@ -22,7 +22,6 @@
         "cpu",
         "temperature",
         "memory",
-        "custom/tablet",
         "backlight",
         "battery",
         "custom/waybar-calendar",

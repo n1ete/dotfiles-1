@@ -10,7 +10,7 @@ dotfiles_dir="$(
 )"
 cd "$dotfiles_dir"
 
-if (( "$EUID" )); then
+if (("$EUID")); then
     sudo -s "$dotfiles_dir/$script_name" "$@"
     exit 0
 fi
@@ -44,7 +44,7 @@ copy() {
 }
 
 is_chroot() {
-    grep rootfs /proc/mounts > /dev/null
+    ! cmp -s /proc/1/mountinfo /proc/self/mountinfo
 }
 
 systemctl_enable() {
@@ -100,7 +100,7 @@ if [[ $HOSTNAME == home-* ]]; then
     copy "etc/systemd/system/backup-repo@.timer"
 fi
 
-(( "$reverse" ))&& exit 0
+(("$reverse"))  && exit 0
 
 echo ""
 echo "================================="

@@ -28,7 +28,7 @@ link() {
 }
 
 is_chroot() {
-    grep rootfs /proc/mounts > /dev/null
+    ! cmp -s /proc/1/mountinfo /proc/self/mountinfo
 }
 
 systemctl_enable_start() {
@@ -52,6 +52,7 @@ link ".magic"
 link ".mbsyncrc"
 link ".notmuch-config"
 link ".p10k.zsh"
+link ".p10k.zsh" ".p10k-ascii-8color.zsh"
 link ".pylintrc"
 link ".taskrc"
 link ".xkb"
