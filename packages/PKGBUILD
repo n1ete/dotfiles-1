@@ -1,5 +1,5 @@
 pkgname='n1ete'
-pkgver=2.12.0
+pkgver=2.12.1
 pkgrel=1
 pkgdesc='Packages installed by n1ete'
 arch=('any')
@@ -63,6 +63,7 @@ depends=(
     'pacman-contrib'
     'devtools'
     'reflector'
+    'blackarch-keyring'
 
     # boot
     'grub'
@@ -140,6 +141,11 @@ depends=(
     'checksec'
     'polkit-gnome'
     'oath-toolkit'
+    'firejail'
+    'firewarden'
+    'torsocks'
+    'privoxy'
+
     # oom prevention
     'earlyoom'
     'systembus-notify'
@@ -152,6 +158,7 @@ depends=(
     'acpi'
     'droidcam'
     'nvidia-dkms'
+    'throttled'
 
     # audio
     'pulseaudio'
@@ -209,8 +216,10 @@ depends=(
     'diff-so-fancy'
     'meld'
     'tig'
+    'myrepos'
 
     # dev tools
+    'ansible'
     'kakoune'
     'kak-lsp'
     'prettier'
@@ -297,6 +306,9 @@ depends=(
     'ebtables'
 
     # misc
+    'aria2'
+    'himawaripy-git'
+    'android-tools'
     'dmenu-term'
     'fzf'
     'calibre'
@@ -310,4 +322,5 @@ depends=(
     'wofi'
     'intel-gpu-tools'
     'wev'
+    's-tui'
 )

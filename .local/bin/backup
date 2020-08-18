@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SOURCE=".dotfiles .ssh .gnupg library/mail"
-BACKUP_PATH="/run/media/n1ete/Ventoy/n1ete"
+BACKUP_PATH="/run/media/n1ete/stikki/n1ete"
 BACKUP_DIR="$BACKUP_PATH/$(date +%Y-%m-%d)"
 
 if [ ! -d "$BACKUP_PATH" ]; then
