@@ -2,10 +2,11 @@
 path = ~/.config/git/common
 
 [commit]
-#gpgsign = true
+gpgsign = true
 
 [user]
 email = schadensregulierung@gmail.com
+signingkey = A8A97BFE4BDB137B002F0CDD4F928F5DA9D310B9
 #signingkey = 2EDC3B26CA9E3C33C174377F0170A7594
 #signingkey = 6467BFFBCB0E526C681A653DCB6847AA9E4DD239
 #signingkey = 3129FAE7E854EDEF

@@ -47,7 +47,6 @@ echo "==========================="
 echo "Setting up user dotfiles..."
 echo "==========================="
 
-
 link ".ignore"
 link ".magic"
 link ".mrtrust"
@@ -58,7 +57,6 @@ link ".zsh-aliases"
 link ".zshenv"
 link ".zshrc"
 link ".curlrc"
-
 
 link ".config/chromium-flags.conf"
 link ".config/environment.d"
@@ -213,6 +211,6 @@ git update-index --assume-unchanged ".config/transmission/settings.json"
 
 echo "Configure repo-local git settings"
 git config user.email "schadensregulierung@gmail.com"
-git config user.signingkey "6467BFFBCB0E526C681A653DCB6847AA9E4DD239"
+git config user.signingkey "A8A97BFE4BDB137B002F0CDD4F928F5DA9D310B9"
 git config commit.gpgsign false
 git remote set-url origin "git@github.com:n1ete/dotkob.git"
