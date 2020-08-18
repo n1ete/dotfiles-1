@@ -218,7 +218,7 @@
 1.  Clone dotfiles:
 
     ```
-    $ git clone https://github.com/cyrinux/dotfiles.git ~/.dotfiles
+    $ git clone https://github.com/n1ete/dotkob.git ~/.dotfiles
     ```
 
 1.  Setup dotfiles:
@@ -230,7 +230,7 @@
 1.  Bootstrap pacman packages:
 
     ```
-    $ sudo pacman -Sy --needed cyril
+    $ sudo pacman -Sy --needed n1ete
     ```
 
 1.  Configure fwupdmgr:

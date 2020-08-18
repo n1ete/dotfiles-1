@@ -11,6 +11,10 @@ dotfiles_dir="$(
 )"
 cd "$dotfiles_dir"
 
+in_docker() {
+    grep -q docker /proc/1/cgroup > /dev/null
+}
+
 link() {
     orig_file="$dotfiles_dir/$1"
     if [ -n "$2" ]; then
@@ -32,6 +36,9 @@ is_chroot() {
 }
 
 systemctl_enable_start() {
+    if ! in_docker; then
+        systemctl --user daemon-reload
+    fi
     echo "systemctl --user enable --now "$1""
     systemctl --user enable --now "$1"
 }
@@ -50,6 +57,7 @@ link ".gtkrc-2.0"
 link ".ignore"
 link ".magic"
 link ".mbsyncrc"
+link ".mrtrus"
 link ".notmuch-config"
 link ".p10k.zsh"
 link ".p10k.zsh" ".p10k-ascii-8color.zsh"
@@ -60,11 +68,14 @@ link ".zprofile"
 link ".zsh-aliases"
 link ".zshenv"
 link ".zshrc"
+link ".curlrc"
 
 link ".mozilla/firefox/profile/user.js"
 link ".mozilla/firefox/profile/chrome"
 
 link ".config/chromium-flags.conf"
+link ".config/firejail"
+link ".config/firewarden"
 link ".config/flashfocus"
 link ".config/gammastep"
 link ".config/gsimplecal"
@@ -72,6 +83,9 @@ link ".config/gtk-3.0"
 link ".config/htop"
 link ".config/imapnotify"
 link ".config/kak"
+link ".config/kanshi"
+link ".config/khal"
+link ".config/khard"
 link ".config/kitty"
 link ".config/mako"
 link ".config/mimeapps.list"
@@ -111,7 +125,7 @@ link ".config/wofi"
 link ".gnupg/gpg-agent.conf"
 
 link ".local/share/applications"
-link ".local/share/qutebrowser/greasemonkey"
+link ".local/share/qutebrowser"
 
 if is_chroot; then
     echo >&2 "=== Running in chroot, skipping user services..."

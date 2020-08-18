@@ -6,6 +6,24 @@ case $menu in
     "qutebrowser")
         qutebrowser "$@" &
         ;;
+    "disposable without network")
+        firewarden -n qutebrowser "$@" &
+        ;;
+    "disposable")
+        firewarden qutebrowser "$@" &
+        ;;
+    "tor browser")
+        tor-browser-en "$@" &
+        ;;
+    "personal")
+        qutebrowser-personal "$@" &
+        ;;
+    "work")
+        qutebrowser-work "$@" &
+        ;;
+    "shopping")
+        qutebrowser-shopping "$@" &
+        ;;
     "copy to clipboard")
         echo "$@" | wl-copy
         ;;

@@ -30,8 +30,6 @@ alias sudo='sudo -E '
 alias tree='tree -a -I .git --dirsfirst'
 alias ll='ls -l'
 alias utc='env TZ=UTC date'
-#alias battery-normal='sudo cctk --PrimaryBattChargeCfg=custom:50-86 --ValSetupPwd="$(pass personal/bios)"'
-#alias battery-full='sudo cctk --PrimaryBattChargeCfg=standard --ValSetupPwd="$(pass personal/bios)"'
 
 ssh() { z4h ssh "$@" }
 

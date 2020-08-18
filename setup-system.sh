@@ -3,6 +3,8 @@
 set -e
 exec 2> >(while read line; do echo -e "\e[01;31m$line\e[0m"; done)
 
+MY_GPG_KEY_ID="0x3129FAE7E854EDEF"
+
 script_name="$(basename "$0")"
 dotfiles_dir="$(
     cd "$(dirname "$0")"
@@ -19,6 +21,10 @@ if [ "$1" = "-r" ]; then
     echo >&2 "Running in reverse mode!"
     reverse=1
 fi
+
+in_docker() {
+    grep -q docker /proc/1/cgroup > /dev/null
+}
 
 copy() {
     if [ -z "$reverse" ]; then
@@ -66,20 +72,27 @@ copy "etc/udev/rules.d/80-nvidia-pm.rules"
 copy "etc/modprobe.d/nvidia.conf"
 copy "etc/bluetooth/main.conf"
 copy "etc/conf.d/snapper"
+copy "etc/iwd/main.conf"
+copy "etc/vnstat.conf"
 copy "etc/default/grub-btrfs/config"
 copy "etc/default/earlyoom"
 copy "etc/docker/daemon.json"
 copy "etc/modules-load.d/v4l2loopback.conf"
 copy "etc/modprobe.d/v4l2loopback.conf"
-copy "etc/pacman.conf"
+copy "etc/pacman.conf" 644
 copy "etc/pacman.d/hooks"
 copy "etc/pam.d/polkit-1"
 copy "etc/pam.d/sudo"
-copy "etc/pulse/default.pa"
+copy "etc/pulse/default.pa" 644
 copy "etc/snap-pac.conf"
 copy "etc/snapper/configs/root"
 copy "etc/ssh/ssh_config"
+copy "etc/modules-load.d/pkcs8.conf"
+copy "etc/tlp.conf" 644
+copy "etc/nmtrust/trusted_units" 644
+copy "etc/nmtrust/excluded_networks" 644
 copy "etc/sudoers.d/override"
+copy "etc/sysctl.d/51-tcp-ip-stack.conf"
 copy "etc/sysctl.d/99-sysctl.conf"
 copy "etc/systemd/journald.conf"
 copy "etc/systemd/logind.conf"
@@ -107,35 +120,39 @@ echo "================================="
 echo "Enabling and starting services..."
 echo "================================="
 
-sysctl --system > /dev/null
+if in_docker; then
+    echo >&2 "=== Running in docker, skipping services configuration..."
+else
+    sysctl --system > /dev/null
 
-systemctl daemon-reload
-systemctl_enable_start "bluetooth.service"
-systemctl_enable_start "btrfs-scrub@-.timer"
-systemctl_enable_start "btrfs-scrub@mnt-btrfs\x2droot.timer"
-systemctl_enable_start "btrfs-scrub@home.timer"
-systemctl_enable_start "btrfs-scrub@var-cache-pacman.timer"
-systemctl_enable_start "btrfs-scrub@var-log.timer"
-systemctl_enable_start "btrfs-scrub@var-tmp.timer"
-systemctl_enable_start "btrfs-scrub@\x2esnapshots.timer"
-systemctl_enable_start "btrfs-scrub@var-lib-aurbuild.timer"
-systemctl_enable_start "btrfs-scrub@var-lib-archbuild.timer"
-systemctl_enable_start "btrfs-scrub@var-lib-docker.timer"
-systemctl_enable_start "docker.socket"
-systemctl_enable_start "earlyoom.service"
-systemctl_enable_start "fstrim.timer"
-systemctl_enable_start "iwd.service"
-systemctl_enable_start "linux-modules-cleanup.service"
-systemctl_enable_start "pcscd.socket"
-systemctl_enable_start "reflector.timer"
-systemctl_enable_start "snapper-cleanup.timer"
-systemctl_enable_start "system-dotfiles-sync.timer"
-systemctl_enable_start "systemd-networkd.socket"
-systemctl_enable_start "systemd-resolved.service"
-systemctl_enable_start "tlp.service"
-systemctl_enable_start "ufw.service"
-systemctl_enable_start "usbguard.service"
-systemctl_enable_start "usbguard-dbus.service"
+    systemctl daemon-reload
+    systemctl_enable_start "bluetooth.service"
+    systemctl_enable_start "btrfs-scrub@-.timer"
+    systemctl_enable_start "btrfs-scrub@mnt-btrfs\x2droot.timer"
+    systemctl_enable_start "btrfs-scrub@home.timer"
+    systemctl_enable_start "btrfs-scrub@var-cache-pacman.timer"
+    systemctl_enable_start "btrfs-scrub@var-log.timer"
+    systemctl_enable_start "btrfs-scrub@var-tmp.timer"
+    systemctl_enable_start "btrfs-scrub@\x2esnapshots.timer"
+    systemctl_enable_start "btrfs-scrub@var-lib-aurbuild.timer"
+    systemctl_enable_start "btrfs-scrub@var-lib-archbuild.timer"
+    systemctl_enable_start "btrfs-scrub@var-lib-docker.timer"
+    systemctl_enable_start "docker.socket"
+    systemctl_enable_start "earlyoom.service"
+    systemctl_enable_start "fstrim.timer"
+    systemctl_enable_start "iwd.service"
+    systemctl_enable_start "linux-modules-cleanup.service"
+    systemctl_enable_start "pcscd.socket"
+    systemctl_enable_start "reflector.timer"
+    systemctl_enable_start "snapper-cleanup.timer"
+    systemctl_enable_start "system-dotfiles-sync.timer"
+    systemctl_enable_start "systemd-networkd.socket"
+    systemctl_enable_start "systemd-resolved.service"
+    systemctl_enable_start "tlp.service"
+    systemctl_enable_start "vnstat.service"
+    systemctl_enable_start "ufw.service"
+    systemctl_enable_start "usbguard.service"
+    systemctl_enable_start "usbguard-dbus.service"
 
 if [ ! -s "/etc/usbguard/rules.conf" ]; then
     echo >&2 "=== Remember to set usbguard rules: usbguard generate-policy >! /etc/usbguard/rules.conf"

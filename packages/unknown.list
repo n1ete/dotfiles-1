@@ -1,5 +1,9 @@
 blackarch-keyring
+firejail
+firewarden
+myrepos
 s-tui
 throttled
+vnstat
 wireless-regdb
 wluma-als-emulator

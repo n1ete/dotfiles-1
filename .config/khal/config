@@ -1,0 +1,21 @@
+[calendars]
+
+[[personal]]
+path = ~/library/calendars/personal/
+color = dark green
+
+[locale]
+timeformat = %H:%M
+dateformat = %d/%m/%Y
+longdateformat = %d/%m/%Y
+datetimeformat = %d/%m/%Y %H:%M
+longdatetimeformat = %d/%m/%Y %H:%M
+local_timezone= Europe/Berlin
+default_timezone= Europe/Berlin
+
+[highlight_days]
+color = light blue
+
+[keybindings]
+external_edit = E
+save = w
