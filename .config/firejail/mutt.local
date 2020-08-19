@@ -1,0 +1,7 @@
+noblacklist ~/.config/vdirsyncer
+noblacklist ~/.vdirsyncer
+noblacklist ~/.calendars
+noblacklist ~/.contacts
+noblacklist ~/.confg/config
+noblacklist ~/.offlineimap
+noblacklist ~/.offlineimaprc

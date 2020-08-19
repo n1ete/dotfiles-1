@@ -2,8 +2,10 @@ blackarch-keyring
 cheat-sh
 firejail
 gitleaks
+glfw-wayland
 privoxy
 s-tui
 throttled
+vagrant
 vnstat
 wireless-regdb
