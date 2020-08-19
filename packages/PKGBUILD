@@ -145,6 +145,7 @@ depends=(
     'firewarden'
     'torsocks'
     'privoxy'
+    'torbrowser-launcher'
 
     # oom prevention
     'earlyoom'
@@ -174,6 +175,7 @@ depends=(
     'sway'
     'swaylock'
     'xorg-server-xwayland'
+    'glfw-wayland'
     'wl-clipboard'
     'wl-clipboard-manager'
     'python-i3ipc'
@@ -274,6 +276,9 @@ depends=(
     'goimapnotify'
 
     # browsers
+    'firefox-i18n-de'
+    'firefox-i18n-en-us'
+    'firefox-ublock-origin'
     'qutebrowser'
     'chromium-widevine'
     'pdfjs'
@@ -300,6 +305,7 @@ depends=(
 
     # virtual machines
     'libvirt'
+    'vagrant'
     'virt-manager'
     'qemu'
     'dnsmasq'
