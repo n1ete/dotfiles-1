@@ -17,6 +17,7 @@
         "custom/recording",
         "custom/dnd",
         "pulseaudio",
+        "custom/bluetooth",
         "network",
         "custom/vpn",
         "cpu",
@@ -28,6 +29,11 @@
         "clock",
         "tray"
     ],
+    "custom/bluetooth": {
+        "exec": "rofi-bluetooth --status",
+        "interval": "1",
+        "on-click": "rofi-bluetooth &"
+    },
     "custom/calendar": {
         "exec": "waybar-calendar",
         "return-type": "json",

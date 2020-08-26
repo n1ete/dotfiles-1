@@ -74,13 +74,13 @@ copy "etc/bluetooth/main.conf"
 copy "etc/conf.d/snapper"
 copy "etc/iwd/main.conf"
 copy "etc/vnstat.conf"
-copy "etc/default/grub-btrfs/config"
 copy "etc/default/earlyoom"
 copy "etc/docker/daemon.json"
 copy "etc/modules-load.d/v4l2loopback.conf"
 copy "etc/modprobe.d/v4l2loopback.conf"
 copy "etc/pacman.conf" 644
 copy "etc/pacman.d/hooks"
+copy "etc/parcimonie.sh.d/n1ete.conf"
 copy "etc/pam.d/polkit-1"
 copy "etc/pam.d/sudo"
 copy "etc/pulse/default.pa" 644
@@ -89,6 +89,7 @@ copy "etc/snapper/configs/root"
 copy "etc/ssh/ssh_config"
 copy "etc/modules-load.d/pkcs8.conf"
 copy "etc/tlp.conf" 644
+copy "etc/tor/torrc"
 copy "etc/nmtrust/trusted_units" 644
 copy "etc/nmtrust/excluded_networks" 644
 copy "etc/sudoers.d/override"
@@ -104,6 +105,7 @@ copy "etc/systemd/system/reflector.service"
 copy "etc/systemd/system/reflector.timer"
 copy "etc/systemd/system/system-dotfiles-sync.service"
 copy "etc/systemd/system/system-dotfiles-sync.timer"
+copy "etc/systemd/system/tor.service.d/override.conf"
 copy "etc/updatedb.conf"
 copy "etc/usbguard/usbguard-daemon.conf" 600
 

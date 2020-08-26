@@ -68,14 +68,14 @@ timedatectl set-ntp true
 hwclock --systohc --utc
 
 echo -e "\n### Installing additional tools"
-pacman -Sy --noconfirm --needed git reflector terminus-font dialog
-setfont "$font"
+pacman -Sy --noconfirm --needed git reflector terminus-font dialog wget
 
 echo -e "\n### HiDPI screens"
 noyes=("Yes" "The font is too small" "No" "The font size is just fine")
 hidpi=$(get_choice "Font size" "Is your screen HiDPI?" "${noyes[@]}") || exit 1
 clear
 [[ "$hidpi" == "Yes" ]] && font="ter-132n" || font="ter-716n"
+setfont "$font"
 
 hostname=$(get_input "Hostname" "Enter hostname") || exit 1
 clear
@@ -105,9 +105,9 @@ bios=$(if [ -f /sys/firmware/efi/fw_platform_size ]; then echo "gpt"; else echo 
 part=$(if [[ $bios == "gpt" ]]; then echo "ESP"; else echo "primary"; fi)
 
 parted --script "${device}" -- mklabel ${bios} \
-    mkpart ${part} fat32 1MiB 101MiB \
-    set 1 boot on \
-    mkpart primary 101MiB 100%
+    mkpart primary 1MiB -551MiB \
+    set 1 boot on \	    mkpart ${part} fat32 -551MiB 100% \
+    mkpart primary 101MiB 100%	    set 2 boot on
 
 part_boot="$(ls ${device}* | grep -E "^${device}p?1$")"
 part_root="$(ls ${device}* | grep -E "^${device}p?2$")"
@@ -117,7 +117,7 @@ wipefs "${part_boot}"
 wipefs "${part_root}"
 
 mkfs.vfat -n "EFI" -F32 "${part_boot}"
-echo -n ${password} | cryptsetup luksFormat --type luks1 "${part_root}"
+echo -n ${password} | cryptsetup luksFormat --type luks2 --label=luks "${part_root}"
 echo -n ${password} | cryptsetup luksOpen "${part_root}" luks
 mkfs.btrfs -L btrfs /dev/mapper/luks
 
@@ -135,8 +135,8 @@ btrfs subvolume create /mnt/snapshots
 umount /mnt
 
 mount -o noatime,nodiratime,compress=zstd,subvol=root /dev/mapper/luks /mnt
-mkdir -p /mnt/{mnt/btrfs-root,boot/efi,home,var/{cache/pacman,log,tmp,lib/{aurbuild,archbuild,docker}},.snapshots}
-mount "${part_boot}" /mnt/boot/efi
+mkdir -p /mnt/{mnt/btrfs-root,efi,home,var/{cache/pacman,log,tmp,lib/{aurbuild,archbuild,docker}},.snapshots}
+mount "${part_boot}" /mnt/efi
 mount -o noatime,nodiratime,compress=zstd,subvol=/ /dev/mapper/luks /mnt/mnt/btrfs-root
 mount -o noatime,nodiratime,compress=zstd,subvol=home /dev/mapper/luks /mnt/home
 mount -o noatime,nodiratime,compress=zstd,subvol=pkgs /dev/mapper/luks /mnt/var/cache/pacman
@@ -147,11 +147,6 @@ mount -o noatime,nodiratime,compress=zstd,subvol=logs /dev/mapper/luks /mnt/var/
 mount -o noatime,nodiratime,compress=zstd,subvol=temp /dev/mapper/luks /mnt/var/tmp
 mount -o noatime,nodiratime,compress=zstd,subvol=snapshots /dev/mapper/luks /mnt/.snapshots
 
-echo -e "\n### Setting up an encrypted key for booting"
-dd bs=512 count=4 if=/dev/urandom of=/mnt/crypto_keyfile.bin
-chmod 000 /mnt/crypto_keyfile.bin
-echo -n ${password} | cryptsetup luksAddKey ${part_root} /mnt/crypto_keyfile.bin
-
 echo -e "\n### Adding blackarch repo"
 curl -sL https://blackarch.org/strap.sh | bash
 
@@ -161,11 +156,13 @@ mkdir /mnt/var/cache/pacman/maximbaz-local
 if [[ "${hostname}" == "home-"* ]]; then
     wget -m -nH -np -q --show-progress --progress=bar:force --reject='index.html*' --cut-dirs=2 -P '/mnt/var/cache/pacman/maximbaz-local' 'https://pkgbuild.com/~maximbaz/repo/'
     rename -- 'maximbaz.' 'maximbaz-local.' /mnt/var/cache/pacman/maximbaz-local/*
+fi
 
+if ! grep maximbaz /etc/pacman.conf > /dev/null; then
     cat >> /etc/pacman.conf << EOF
 [maximbaz]
 SigLevel = Required
-Server = https://pkgbuild.com/~maximbaz/repo/
+Server = https://pkgbuild.com/~maximbaz/repo
 Usage = Install Sync
 
 [n1ete-local]
@@ -173,9 +170,10 @@ SigLevel = Optional
 Server = file:///mnt/var/cache/pacman/n1ete-local
 
 [options]
-CacheDir = /var/cache/pacman/pkg
+CacheDir = /mnt/var/cache/pacman/pkg
 CacheDir = /mnt/var/cache/pacman/n1ete-local
 EOF
+fi
 
 else
     cat >> /etc/pacman.conf << EOF
@@ -186,17 +184,17 @@ Usage = Install Sync
 
 [options]
 CacheDir = /var/cache/pacman/pkg
-EOF
 
-fi
+EOF
 
 echo -e "\n### Installing packages"
 pacstrap -i /mnt maximbaz
 
 echo -e "\n### Generating base config files"
 ln -sfT dash /mnt/usr/bin/sh
+echo "cryptdevice=LABEL=luks:luks:allow-discards root=LABEL=btrfs rw rootflags=subvol=root quiet mem_sleep_default=deep" > /mnt/etc/kernel/cmdline
 echo "FONT=$font" > /mnt/etc/vconsole.conf
-genfstab -U /mnt >> /mnt/etc/fstab
+genfstab -L /mnt >> /mnt/etc/fstab
 echo "${hostname}" > /mnt/etc/hostname
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 echo "de_DE.UTF-8 UTF-8" >> /mnt/etc/locale.gen
@@ -205,40 +203,11 @@ arch-chroot /mnt locale-gen
 cat << EOF > /mnt/etc/mkinitcpio.conf
 MODULES=(battery nvme)
 BINARIES=()
-FILES=(/crypto_keyfile.bin)
+FILES=()
 HOOKS=(base consolefont udev autodetect modconf block encrypt filesystems keyboard)
 EOF
 arch-chroot /mnt mkinitcpio -p linux
-cat << EOF > /mnt/etc/sudoers
-root ALL=(ALL) ALL
-%wheel ALL=(ALL) ALL
-@includedir /etc/sudoers.d
-EOF
-
-echo -e "\n### Installing GRUB"
-chmod 600 /mnt/boot/initramfs-linux*
-cat << EOF > /mnt/etc/default/grub
-GRUB_DEFAULT=0
-GRUB_TIMEOUT=5
-GRUB_DISTRIBUTOR="Arch"
-GRUB_CMDLINE_LINUX_DEFAULT="mem_sleep_default=deep net.ifnames=0 i915.enable_guc=2 i915.enable_fbc=1 i915.enable_psr=2 i915.enable_dpcd_backlight=1"
-GRUB_CMDLINE_LINUX="cryptdevice=${part_root}:luks:allow-discards"
-GRUB_PRELOAD_MODULES="part_gpt part_msdos"
-GRUB_ENABLE_CRYPTODISK=y
-GRUB_TIMEOUT_STYLE=menu
-GRUB_TERMINAL_INPUT=console
-GRUB_GFXMODE=1280x1024x32,1024x768x32,auto
-GRUB_DISABLE_RECOVERY=true
-EOF
-arch-chroot /mnt grub-install ${device}
-arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
-cat << EOF > /mnt/boot/grub/update.sh
-#!/bin/sh
-
-grub-install ${device}
-cryptboot-efikeys sign /boot/efi/EFI/arch/grubx64.efi
-EOF
-chmod +x /mnt/boot/grub/update.sh
+arch-chroot /mnt arch-secure-boot initial-setup
 
 echo -e "\n### Creating user"
 arch-chroot /mnt useradd -m -s /usr/bin/zsh "$user"
@@ -247,16 +216,11 @@ for group in wheel network nzbget video; do
     arch-chroot /mnt gpasswd -a "$user" "$group"
 done
 arch-chroot /mnt chsh -s /usr/bin/zsh
-echo "$user:$password" | chpasswd --root /mnt
+echo "$user:$password" | arch-chroot /mnt chpasswd
 arch-chroot /mnt passwd -dl root
 
 echo -e "\n### Setting permissions on the custom repo"
 arch-chroot /mnt chown -R "$user:$user" /var/cache/pacman/n1ete-local/
-
-echo -e "\n### Setting up Secure Boot for GRUB with custom keys"
-echo MB | arch-chroot /mnt cryptboot-efikeys create
-arch-chroot /mnt cryptboot-efikeys enroll
-arch-chroot /mnt cryptboot-efikeys sign /boot/efi/EFI/arch/grubx64.efi
 
 echo -e "\n### Cloning dotfiles"
 arch-chroot /mnt sudo -u $user bash -c 'git clone --recursive https://github.com/n1ete/dotkob.git ~/.dotfiles'
@@ -264,6 +228,7 @@ arch-chroot /mnt sudo -u $user bash -c 'git clone --recursive https://github.com
 echo -e "\n### Running initial setup"
 arch-chroot /mnt /home/$user/.dotfiles/setup-system.sh
 arch-chroot /mnt sudo -u $user /home/$user/.dotfiles/setup-user.sh
+arch-chroot /mnt sudo -u $user z4h update
 
 echo -e "\n### DONE - reboot and re-run both ~/.dotfiles/setup-*.sh scripts"
 umount -R /mnt

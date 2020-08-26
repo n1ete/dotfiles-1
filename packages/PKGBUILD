@@ -1,5 +1,5 @@
 pkgname='n1ete'
-pkgver=2.12.1
+pkgver=2.13.0
 pkgrel=1
 pkgdesc='Packages installed by n1ete'
 arch=('any')
@@ -66,12 +66,9 @@ depends=(
     'blackarch-keyring'
 
     # boot
-    'grub'
+    'arch-secure-boot'
     'intel-ucode'
-    'efibootmgr'
-    'cryptboot'
     'terminus-font'
-    'snap-pac-grub'
 
     # files
     'progress'
@@ -146,6 +143,8 @@ depends=(
     'torsocks'
     'privoxy'
     'torbrowser-launcher'
+    'parcimonie-sh-git'
+    'nmtrust-git'
 
     # oom prevention
     'earlyoom'
@@ -310,6 +309,7 @@ depends=(
     'qemu'
     'dnsmasq'
     'ebtables'
+    'edk2-ovmf'
 
     # misc
     'aria2'
@@ -321,7 +321,6 @@ depends=(
     'krita'
     'libqalculate'
     'libreoffice-fresh'
-    'task'
     'transmission-gtk'
     'strace'
     'code'

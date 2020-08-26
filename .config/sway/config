@@ -301,4 +301,4 @@ include /etc/sway/config.d/*
 exec systemctl --user start sway-session.target
 
 # Load host-specific configs
-include ~/.config/sway/`hostgroup`.conf
+include "~/.config/sway/$(cut -d'-' -f1 /etc/hostname).conf"

@@ -65,7 +65,7 @@ link ".config/firejail"
 link ".config/firewarden"
 link ".config/flashfocus"
 link ".config/gammastep"
-link ".config/git/$(hostgroup)" ".config/git/config"
+link ".config/git/$(cut -d'-' -f1 /etc/hostname)" ".config/git/config"
 link ".config/git/common"
 link ".config/git/home"
 link ".config/git/work"
@@ -79,7 +79,7 @@ link ".config/kak"
 link ".config/kanshi"
 link ".config/khal"
 link ".config/khard"
-link ".config/kitty"
+link ".config/kitty"echo "5\ny\n" | gpg --command-fd 0 --no-tty --batch --edit-key "$MY_GPG_KEY_ID" trust
 link ".config/mako"
 link ".config/mbsync"
 link ".config/mimeapps.list"
@@ -88,6 +88,7 @@ link ".config/msmtp"
 link ".config/neomutt"
 link ".config/notmuch"
 link ".config/pacman"
+link ".config/pgcli/config"
 link ".config/pylint"
 link ".config/qalculate/qalc.cfg"
 link ".config/qutebrowser"
@@ -147,7 +148,7 @@ else
     systemctl_enable_start "wl-clipboard-manager.service"
     systemctl_enable_start "wluma-als-emulator.service"
     systemctl_enable_start "wluma.service"
-    systemctl_enable_start "yubikey-touch-detector.service"
+    systemctl_enable_start "yubikey-touch-detector.socket"
     systemctl_enable_start "himawaripy.timer"
 
     if [[ $HOSTNAME == home-* ]]; then
@@ -175,12 +176,12 @@ file --compile --magic-file "$HOME/.magic"
 if ! gpg -k | grep "$MY_GPG_KEY_ID" > /dev/null; then
     echo "Importing my public PGP key"
     curl -s https://keys.openpgp.org/vks/v1/by-fingerprint/4AA5A5A3602162EF1459D24D3129FAE7E854EDEF | gpg --import
-    gpg --trusted-key "$MY_GPG_KEY_ID" > /dev/null
+    echo "5\ny\n" | gpg --command-fd 0 --no-tty --batch --edit-key "$MY_GPG_KEY_ID" trust
 fi
 
-find "$GNUPGHOME" -type f -path "*#*" -delete
-find "$GNUPGHOME" -type f -not -path "*#*" -exec chmod 600 {} \;
-find "$GNUPGHOME" -type d -exec chmod 700 {} \;
+find "$HOME/.gnupg" -type f -path "*#*" -delete
+find "$HOME/.gnupg" -type f -not -path "*#*" -exec chmod 600 {} \;
+find "$HOME/.gnupg" -type d -exec chmod 700 {} \;
 
 if is_chroot; then
     echo >&2 "=== Running in chroot, skipping YubiKey configuration..."

@@ -1,14 +1,17 @@
 zstyle    ':z4h:'                                        auto-update            no
 zstyle    ':z4h:*'                                       channel                stable
-zstyle    ':z4h:'                                        cd-key                 alt
 zstyle    ':z4h:autosuggestions'                         forward-char           accept
 zstyle    ':z4h:ssh:*'                                   ssh-command            command ssh
 zstyle    ':z4h:ssh:*'                                   send-extra-files       '~/.zsh-aliases'
-zstyle -e ':z4h:ssh:*'                                   retrieve-history       'reply=($XDG_DATA_HOME/zsh-history/${z4h_ssh_host##*:})'
+#zstyle -e ':z4h:ssh:*'                                   retrieve-history       'reply=($XDG_DATA_HOME/zsh-history/${z4h_ssh_host##*:})'
 zstyle    ':fzf-tab:*'                                   continuous-trigger     tab
 zstyle    ':zle:(up|down)-line-or-beginning-search'      leave-cursor           no
 zstyle    ':z4h:term-title:ssh'                          preexec                '%* | %n@%m: ${1//\%/%%}'
 zstyle    ':z4h:term-title:local'                        preexec                '%* | ${1//\%/%%}'
+zstyle    ':zle:up-line-or-beginning-search'             leave-cursor           true
+zstyle    ':zle:down-line-or-beginning-search'           leave-cursor           true
+
+######
 zstyle    ':z4h:ssh:jukebot'     passthrough             yes
 zstyle    ':z4h:ssh:planet01'     passthrough            yes
 zstyle    ':z4h:ssh:talk'     passthrough                yes
@@ -20,17 +23,22 @@ zstyle    ':z4h:ssh:corekeep'     passthrough            yes
 zstyle    ':z4h:ssh:keep'     passthrough                yes
 zstyle    ':z4h:ssh:mufu'     passthrough                yes
 
-z4h install romkatv/archive || return
+###
 
+z4h install romkatv/archive || return
 z4h init || return
+
+####
 
 fpath+=($Z4H/romkatv/archive)
 autoload -Uz archive lsarchive unarchive edit-command-line
 
-z4h-ssh-configure() {
-    file="$XDG_DATA_HOME/zsh-history/$z4h_ssh_host"
-    [ -e "$file" ] && z4h_ssh_send_files[$file]='"$ZDOTDIR"/.zsh_history'
-}
+zle -N edit-command-line
+
+#z4h-ssh-configure() {
+#    file="$XDG_DATA_HOME/zsh-history/$z4h_ssh_host"
+#    [ -e "$file" ] && z4h_ssh_send_files[$file]='"$ZDOTDIR"/.zsh_history'
+#}
 
 my-ctrl-z() {
     if [[ $#BUFFER -eq 0 ]]; then
@@ -42,7 +50,6 @@ my-ctrl-z() {
     fi
 }
 zle -N my-ctrl-z
-bindkey '^Z' my-ctrl-z
 
 toggle-sudo() {
     [[ -z "$BUFFER" ]] && zle up-history -w
@@ -54,10 +61,29 @@ toggle-sudo() {
     fi
 }
 zle -N toggle-sudo
-bindkey '^[s' toggle-sudo
 
-zle -N edit-command-line
+###
+
+z4h bindkey z4h-backward-kill-word  Ctrl+Backspace
+z4h bindkey z4h-backward-kill-zword Ctrl+Alt+Backspace
+z4h bindkey z4h-kill-zword          Ctrl+Alt+Delete
+
+z4h bindkey z4h-forward-zword       Ctrl+Alt+Right
+z4h bindkey z4h-backward-zword      Ctrl+Alt+Left
+
+z4h bindkey z4h-cd-back             Alt+H
+z4h bindkey z4h-cd-forward          Alt+L
+z4h bindkey z4h-cd-up               Alt+K
+z4h bindkey z4h-cd-down             Alt+J
+
+z4h bindkey toggle-sudo             Alt+S
+z4h bindkey my-ctrl-z               Ctrl+Z
+z4h bindkey edit-command-line       Alt+E
+
+bindkey -r '^V'
 bindkey '^V^V' edit-command-line
+
+###
 
 bindkey '^H'      z4h-backward-kill-word
 bindkey '^[[1;7C' z4h-forward-zword
@@ -69,22 +95,27 @@ command -v direnv &> /dev/null && eval "$(direnv hook zsh)"
 
 setopt GLOB_DOTS
 
+###
+
 [ -z "$EDITOR" ] && export EDITOR='vim'
 [ -z "$VISUAL" ] && export VISUAL='vim'
 
-export GPG_TTY=$TTY
-export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 export DIRENV_LOG_FORMAT=
 export FZF_DEFAULT_OPTS="--reverse --multi"
 export SYSTEMD_LESS=FRXMK
 
-z4h source -c /etc/bash_completion.d/azure-cli
-z4h source -c /usr/share/LS_COLORS/dircolors.sh
-z4h source -c /usr/share/nnn/quitcd/quitcd.bash_zsh
-z4h source -c ~/.zsh-aliases
-z4h source -c ~/.pentest-aliases
-z4h source -c ~/.zshrc-private
+###
 
-[ -f ~/.dotfiles/z4h.patch ] && patch -Np1 -i ~/.dotfiles/z4h.patch -r /dev/null -d $Z4H/zsh4humans/ > /dev/null
+command -v direnv &> /dev/null && eval "$(direnv hook zsh)"
 
-return 0
+###
+
+z4h source -c -- /etc/bash_completion.d/azure-cli
+
+z4h source -c -- /usr/share/LS_COLORS/dircolors.sh
+z4h source -c -- /usr/share/nnn/quitcd/quitcd.bash_zsh
+z4h source -c -- $ZDOTDIR/.zsh-aliases
+z4h source -c -- $ZDOTDIR/.zshrc-private
+z4h compile   -- $ZDOTDIR/{.zshenv,.zprofile,.zshrc,.zlogin,.zlogout}
+
+# patch -Np1 -i ~/.dotfiles/z4h.patch -r /dev/null -d $Z4H/zsh4humans/

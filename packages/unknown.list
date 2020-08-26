@@ -1,8 +1,13 @@
 blackarch-keyring
 cheat-sh
+digikam-plugin-gmic
 firejail
+firewarden
 gitleaks
 glfw-wayland
+himawaripy-git
+myrepos
+parcimonie-sh-git
 privoxy
 s-tui
 throttled
@@ -10,3 +15,4 @@ torbrowser-launcher
 vagrant
 vnstat
 wireless-regdb
+wluma-als-emulator
