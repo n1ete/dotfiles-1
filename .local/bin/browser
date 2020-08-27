@@ -13,7 +13,7 @@ case $menu in
         firewarden qutebrowser "$@" &
         ;;
     "tor browser")
-        tor-browser-en "$@" &
+        torbrowser-launcher "$@" &
         ;;
     "personal")
         qutebrowser-personal "$@" &

@@ -1,18 +1,23 @@
 # ui
-config.source("gruvbox.py")
+#config.source("gruvbox.py")
+
+# ui
+config.source(os.environ["HOME"] + "/.config/qutebrowser/gruvbox.py")
+c.url.default_page = "~/.config/qutebrowser/blank.html"
+c.url.start_pages = ["~/.config/qutebrowser/blank.html"]
 
 # Use a different color for work container to give visual distinction
-#if "QUTE_CONTAINER" not in os.environ or os.environ["QUTE_CONTAINER"] == "facebook":
-#    c.colors.tabs.selected.even.bg = "#B48EAD"
-#elif os.environ["QUTE_CONTAINER"] == "personal":
-#    c.colors.tabs.selected.even.bg = "#504955"
-#    c.colors.tabs.selected.even.fg = "#d79921"
-#elif os.environ["QUTE_CONTAINER"] == "work":
-#    c.colors.tabs.selected.even.bg = "#076678"
-#    c.colors.tabs.selected.even.fg = "#ebdbb2"
-#elif os.environ["QUTE_CONTAINER"] == "private":
-#    c.colors.tabs.selected.even.bg = "#282828"
-#    c.colors.tabs.selected.even.fg = "#cc241d"
+if "QUTE_CONTAINER" not in os.environ or os.environ["QUTE_CONTAINER"] == "facebook":
+    c.colors.tabs.selected.even.bg = "#B48EAD"
+elif os.environ["QUTE_CONTAINER"] == "personal":
+    c.colors.tabs.selected.even.bg = "#504955"
+    c.colors.tabs.selected.even.fg = "#d79921"
+elif os.environ["QUTE_CONTAINER"] == "work":
+    c.colors.tabs.selected.even.bg = "#076678"
+    c.colors.tabs.selected.even.fg = "#ebdbb2"
+elif os.environ["QUTE_CONTAINER"] == "private":
+    c.colors.tabs.selected.even.bg = "#282828"
+    c.colors.tabs.selected.even.fg = "#cc241d"
 
 c.colors.tabs.selected.odd.bg = c.colors.tabs.selected.even.bg
 
