@@ -1,0 +1,7 @@
+---
+debug: true
+wait: true
+timeouts:
+  - timeout: 300
+    command: "sway-exit lock"
+before-sleep: "sway-exit lock"
