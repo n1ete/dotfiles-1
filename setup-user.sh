@@ -118,6 +118,7 @@ link ".config/USBGuard"
 link ".config/waybar"
 link ".config/wluma"
 link ".config/vimiv"
+link ".config/vdirsyncer"
 link ".config/wofi"
 link ".config/xkb"
 

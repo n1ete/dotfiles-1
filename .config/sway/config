@@ -157,6 +157,7 @@ bindsym --to-code {
     $hyper+p     fullscreen disable, exec "wl-clipboard-manager lock; passmenu -p pass; wl-clipboard-manager unlock"
     $hyper+m     fullscreen disable, exec udiskie-dmenu
     $win+grave   fullscreen disable, exec wl-clipboard-manager dmenu
+    $hyper+b      fullscreen disable, exec "pgrep -x dmenu && pkill dmenu || browser"
     Print        exec sway-screenshot-area
     $hyper+Print exec sway-gif-area
     $win+Print   exec sway-screenshare

@@ -172,6 +172,7 @@ depends=(
 
     # sway
     'sway'
+    'swayidle'
     'swaylock'
     'xorg-server-xwayland'
     'glfw-wayland'
@@ -321,6 +322,7 @@ depends=(
     'krita'
     'libqalculate'
     'libreoffice-fresh'
+    'vdirsyncer'
     'transmission-gtk'
     'strace'
     'code'
