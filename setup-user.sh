@@ -79,7 +79,7 @@ link ".config/kak"
 link ".config/kanshi"
 link ".config/khal"
 link ".config/khard"
-link ".config/kitty"echo "5\ny\n" | gpg --command-fd 0 --no-tty --batch --edit-key "$MY_GPG_KEY_ID" trust
+link ".config/kitty"
 link ".config/mako"
 link ".config/mbsync"
 link ".config/mimeapps.list"
