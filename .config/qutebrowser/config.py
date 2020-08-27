@@ -1,8 +1,7 @@
-# ui
-#config.source("gruvbox.py")
+import os
 
 # ui
-config.source(os.environ["$HOME"] + "~/.config/qutebrowser/gruvbox.py")
+config.source(os.environ["HOME"] + "/.config/qutebrowser/gruvbox.py")
 #c.url.default_page = "~/.config/qutebrowser/blank.html"
 #c.url.start_pages = ["~/.config/qutebrowser/blank.html"]
 

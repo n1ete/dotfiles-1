@@ -2,8 +2,8 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=Tor Browser (en-US)
-Exec=tor-browser-en
+Name=Tor Browser Launcher
+Exec=torbrowser-launcher
 Icon=tor-browser-en
 Categories=Network;
 Comment=Tor Browser Bundle: anonymous browsing using Firefox and Tor.
