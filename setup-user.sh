@@ -122,8 +122,8 @@ link ".config/xkb"
 
 link ".local/bin"
 link ".local/share/applications"
-link ".local/share/gpg/gpg.conf"
-link ".local/share/gpg/gpg-agent.conf"
+link ".gnupg/gpg.conf"
+link ".gnupg/gpg-agent.conf"
 link ".local/share/qutebrowser/greasemonkey"
 
 if is_chroot; then

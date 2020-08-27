@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SOURCE=".dotfiles .ssh .local/share/gpg library/mail"
+SOURCE=".dotfiles .ssh .gnupg library/mail"
 BACKUP_PATH="/run/media/n1ete/stikki/n1ete"
 BACKUP_DIR="$BACKUP_PATH/$(date +%Y-%m-%d)"
 
