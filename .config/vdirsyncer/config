@@ -15,10 +15,10 @@ path = "~/library/contacts/"
 fileext = ".vcf"
 
 [storage my_contacts_remote]
-email = n1ete
+email = "n1ete"
 secrets_dir = "~/library/scrt/vdirsyncer/"
 server_path = "https://bruno.orbit:8080"
-#type = "carddav"
+type = "carddav"
 #url.fetch = ["command", "vdirsyncer-get-creds", "contacts_url"]
 #username.fetch = ["command", "vdirsyncer-get-creds", "username"]
 #password.fetch = ["command", "vdirsyncer-get-creds", "password"]
@@ -37,10 +37,10 @@ path = "~/library/calendars/"
 fileext = ".ics"
 
 [storage my_calendars_remote]
-email = n1ete
+email = "n1ete"
 secrets_dir = "~/library/scrt/vdirsyncer/"
 server_path = "https://bruno.orbit:8080"
-#type = "caldav"
+type = "caldav"
 #url.fetch = ["command", "vdirsyncer-get-creds", "calendars_url"]
 #username.fetch = ["command", "vdirsyncer-get-creds", "username"]
 #password.fetch = ["command", "vdirsyncer-get-creds", "password"]

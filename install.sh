@@ -26,7 +26,6 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 exec 1> >(tee "stdout.log")
 exec 2> >(tee "stderr.log")
 
-REPO_URL="https://pkgbuild.com/~maximbaz/repo/"
 export SNAP_PAC_SKIP=y
 
 # Dialog
@@ -62,6 +61,12 @@ get_choice() {
     options=("$@")
     dialog --clear --stdout --backtitle "$BACKTITLE" --title "$title" --menu "$description" 0 0 0 "${options[@]}"
 }
+
+echo -e "\n### Checking UEFI boot mode"
+if [ ! -f /sys/firmware/efi/fw_platform_size ]; then
+    echo >&2 "You must boot in UEFI mode to continue"
+    exit 2
+fi
 
 echo -e "\n### Setting up clock"
 timedatectl set-ntp true
@@ -101,23 +106,15 @@ echo -e "\n### Setting up partitions"
 umount -R /mnt 2> /dev/null || true
 cryptsetup luksClose luks 2> /dev/null || true
 
-bios=$(if [ -f /sys/firmware/efi/fw_platform_size ]; then echo "gpt"; else echo "msdos"; fi)
-part=$(if [[ $bios == "gpt" ]]; then echo "ESP"; else echo "primary"; fi)
+wipefs --all "${device}"
+sgdisk --clear "${device}" --new 1::-551MiB "${device}" --new 2::0 --type 2:ef00 --change-name=2:"EFI" "${device}"
 
-parted --script "${device}" -- mklabel ${bios} \
-    mkpart primary 1MiB -551MiB \
-    set 1 boot on \	    mkpart ${part} fat32 -551MiB 100% \
-    mkpart primary 101MiB 100%	    set 2 boot on
-
-part_boot="$(ls ${device}* | grep -E "^${device}p?1$")"
-part_root="$(ls ${device}* | grep -E "^${device}p?2$")"
+part_root="$(ls ${device}* | grep -E "^${device}p?1$")"
+part_boot="$(ls ${device}* | grep -E "^${device}p?2$")"
 
 echo -e "\n### Formatting partitions"
-wipefs "${part_boot}"
-wipefs "${part_root}"
-
 mkfs.vfat -n "EFI" -F32 "${part_boot}"
-echo -n ${password} | cryptsetup luksFormat --type luks2 --label=luks "${part_root}"
+echo -n ${password} | cryptsetup luksFormat --type luks2 --pbkdf argon2id --label=luks "${part_root}"
 echo -n ${password} | cryptsetup luksOpen "${part_root}" luks
 mkfs.btrfs -L btrfs /dev/mapper/luks
 
@@ -156,12 +153,14 @@ mkdir /mnt/var/cache/pacman/maximbaz-local
 if [[ "${hostname}" == "home-"* ]]; then
     wget -m -nH -np -q --show-progress --progress=bar:force --reject='index.html*' --cut-dirs=2 -P '/mnt/var/cache/pacman/maximbaz-local' 'https://pkgbuild.com/~maximbaz/repo/'
     rename -- 'maximbaz.' 'maximbaz-local.' /mnt/var/cache/pacman/maximbaz-local/*
+else
+    repo-add /var/cache/pacman/maximbaz-local/maximbaz-local.db.tar
 fi
 
 if ! grep maximbaz /etc/pacman.conf > /dev/null; then
     cat >> /etc/pacman.conf << EOF
 [maximbaz]
-SigLevel = Required
+Siglevel = Optional
 Server = https://pkgbuild.com/~maximbaz/repo
 Usage = Install Sync
 
@@ -176,10 +175,10 @@ EOF
 fi
 
 else
-    cat >> /etc/pacman.conf << EOF
+cat     >> /etc/pacman.conf << EOF
 [maximbaz]
 Server = https://pkgbuild.com/~maximbaz/repo/
-SigLevel = Required
+SigLevel = Optional
 Usage = Install Sync
 
 [options]
@@ -228,7 +227,7 @@ arch-chroot /mnt sudo -u $user bash -c 'git clone --recursive https://github.com
 echo -e "\n### Running initial setup"
 arch-chroot /mnt /home/$user/.dotfiles/setup-system.sh
 arch-chroot /mnt sudo -u $user /home/$user/.dotfiles/setup-user.sh
-arch-chroot /mnt sudo -u $user z4h update
+arch-chroot /mnt sudo -u $user zsh -ic true
 
 echo -e "\n### DONE - reboot and re-run both ~/.dotfiles/setup-*.sh scripts"
 umount -R /mnt

@@ -76,6 +76,7 @@ copy "etc/iwd/main.conf"
 copy "etc/vnstat.conf"
 copy "etc/default/earlyoom"
 copy "etc/docker/daemon.json"
+copy "etc/fwupd/uefi.conf"
 copy "etc/modules-load.d/v4l2loopback.conf"
 copy "etc/modprobe.d/v4l2loopback.conf"
 copy "etc/pacman.conf" 644

@@ -330,4 +330,5 @@ depends=(
     'intel-gpu-tools'
     'wev'
     's-tui'
+    'urlwatch'
 )
