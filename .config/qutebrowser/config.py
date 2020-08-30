@@ -2,8 +2,6 @@ import os
 
 # ui
 config.source(os.environ["HOME"] + "/.config/qutebrowser/gruvbox.py")
-#c.url.default_page = "~/.config/qutebrowser/blank.html"
-#c.url.start_pages = ["~/.config/qutebrowser/blank.html"]
 
 # Use a different color for work container to give visual distinction
 if "QUTE_CONTAINER" not in os.environ or os.environ["QUTE_CONTAINER"] == "facebook":

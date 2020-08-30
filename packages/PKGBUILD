@@ -268,12 +268,14 @@ depends=(
     'pwgen'
     'msitools'
 
-    # email
+    # email & messaging
     'isync'
     'msmtp'
     'neomutt'
     'urlscan'
     'goimapnotify'
+    'mattermost-desktop'
+    'signal-desktop'
 
     # browsers
     'firefox-i18n-de'

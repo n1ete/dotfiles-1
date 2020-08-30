@@ -25,7 +25,6 @@
         "memory",
         "backlight",
         "battery",
-        "custom/waybar-calendar",
         "clock",
         "tray"
     ],

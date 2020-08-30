@@ -1,6 +1,6 @@
 blackarch-keyring
 cheat-sh
-digikam-plugin-gmic
+darktable
 firejail
 firewarden
 gitleaks
@@ -13,6 +13,8 @@ myrepos
 parcimonie-sh-git
 powertop
 privoxy
+rmlint-shredder
+signal-desktop
 s-tui
 swayidle
 throttled
@@ -20,6 +22,7 @@ torbrowser-launcher
 urlwatch
 vagrant
 vdirsyncer
+vlc
 vnstat
 wireless-regdb
 wluma-als-emulator
