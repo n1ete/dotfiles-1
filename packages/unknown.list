@@ -1,6 +1,8 @@
 blackarch-keyring
+bolt
 cheat-sh
 darktable
+evdi-git
 firejail
 firewarden
 gitleaks
@@ -8,8 +10,10 @@ glfw-wayland
 himawaripy-git
 ifuse
 libplist-git
+mattermost-desktop
 megatools
 myrepos
+packer
 parcimonie-sh-git
 powertop
 privoxy
@@ -22,7 +26,12 @@ torbrowser-launcher
 urlwatch
 vagrant
 vdirsyncer
+virtualbox
+virtualbox-host-dkms
 vlc
 vnstat
+wakatime
+wdisplays-git
+weechat
 wireless-regdb
 wluma-als-emulator

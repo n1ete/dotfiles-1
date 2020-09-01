@@ -2,17 +2,18 @@
 font pango: Taskbar, Cantarell 9
 
 input type:keyboard {
-    xkb_layout de,de-hyper
+    xkb_layout de-hyper,de
     xkb_options grp:shifts_toggle,caps:hyper,numpad:mac
-    xkb_numlock disable
+    xkb_numlock enable
     xkb_variant nodeadkeys
     xkb_model pc105
 }
 
 input type:touchpad {
     natural_scroll enabled
-    #tap enabled
+    tap disabled
     dwt enabled
+    events disabled
 }
 
 seat * hide_cursor 10000

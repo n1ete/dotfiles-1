@@ -11,4 +11,5 @@
 .wine/
 node_modules/
 
+.wakatime.cfg
 *.class
