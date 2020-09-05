@@ -3,11 +3,13 @@
     "height": 25,
     "modules-left": [
         "sway/workspaces",
+        "custom/scratchpad",
         "sway/mode"
+
     ],
     "modules-right": [
-        "custom/fwupd",
         "custom/progress",
+        "custom/fwupd",
         "custom/usbguard",
         "custom/yubikey",
         "custom/decrypted",
@@ -28,6 +30,21 @@
         "clock",
         "tray"
     ],
+    "custom/scratchpad": {
+	    "format": "{} 󰀿",
+	    "interval": 1,
+	    "exec": "swaymsg -t get_tree | jq '.nodes[].nodes[] | select(.name==\"__i3_scratch\").floating_nodes | length'"
+    },
+    "custom/netatmo": {
+        "exec": "waybar-netatmo",
+        "return-type": "json",
+        "interval": 60
+    },
+    "custom/prod-status": {
+        "exec": "~/library/src/personal/waybar-livestatus/waybar-livestatus",
+        "return-type": "json",
+        "interval": 30
+    },
     "custom/bluetooth": {
         "exec": "rofi-bluetooth --status",
         "interval": "1",
@@ -41,7 +58,7 @@
     "custom/fwupd": {
         "exec": "waybar-fwupd",
         "return-type": "json",
-        "interval": 43200
+        "interval": 3600
     },
     "custom/progress": {
         "exec": "waybar-progress",
@@ -165,8 +182,9 @@
     "temperature": {
         "format": " {temperatureC}°C",
         "thermal-zone": 0,
-        "critical-threshold": 60,
-        "format-critical": " {temperatureC}°C"
+        "critical-threshold": 80,
+        "format-critical": " {temperatureC}°C",
+        "format": " {temperatureC}°C"
         }
 
 }

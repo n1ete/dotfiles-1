@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+get_status() {
+    status=$(curl -s https://healthchecks.ioCUSTOMURL | jq -r '.status')
+    if [ "$status" == "up" ]; then
+        icon=''
+        tooltip='Infra is OK'
+        class=up
+    else
+        icon=''
+        tooltip='Infra got a problem!'
+        class=down
+    fi
+    printf '{"text": " %s ", "tooltip": "%s", "class": "%s"}\n' "$icon" "$tooltip" "$class"
+}
+
+nm-online -q -t 60 && get_status
