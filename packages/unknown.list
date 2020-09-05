@@ -1,3 +1,5 @@
+autorandr
+bbswitch-dkms
 blackarch-keyring
 bolt
 cheat-sh
@@ -9,10 +11,15 @@ gitleaks
 glfw-wayland
 himawaripy-git
 ifuse
+kanshi
 libplist-git
 mattermost-desktop
 megatools
+mesa-demos
 myrepos
+nvidia-prime
+opencl-mesa
+optimus-manager
 packer
 parcimonie-sh-git
 powertop
@@ -35,3 +42,4 @@ wdisplays-git
 weechat
 wireless-regdb
 wluma-als-emulator
+xf86-video-intel

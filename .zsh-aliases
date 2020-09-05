@@ -14,6 +14,7 @@ command -v exa       &> /dev/null    && alias la='ll -a'                        
 command -v exa       &> /dev/null    && alias lk='ll -s=size'                                      || alias lk='ll -r --sort=size'
 command -v exa       &> /dev/null    && alias lm='ll -s=modified'                                  || alias lm='ll -r --sort=time'
 
+alias sshprox="ssh -D 9876 -f -C -q -N"
 alias e="$EDITOR"
 alias d='dig +nocmd +multiline +noall +answer'
 alias cp='cp -r --reflink=auto'

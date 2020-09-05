@@ -161,15 +161,16 @@ if [ ! -s "/etc/usbguard/rules.conf" ]; then
     echo >&2 "=== Remember to set usbguard rules: usbguard generate-policy >! /etc/usbguard/rules.conf"
 fi
 
-#if [[ $HOSTNAME == home-* ]]; then
-#    systemctl_enable_start "backup-repo@pkgbuild.timer"
-#
-#    if [ -d "/home/n1ete/.ccnet" ]; then
-#        systemctl_enable_start "seaf-cli@n1ete.service"
-#    else
-#        echo >&2 "=== Seafile is not initialized, skipping..."
-#    fi
-#fi
+if [ -d "/home/maximbaz/.ccnet" ]; then
+    systemctl_enable_start "seaf-cli@maximbaz.service"
+else
+    echo >&2 "=== Seafile is not initialized, skipping..."
+fi
+
+if [[ $HOSTNAME == home-* ]]; then
+    systemctl_enable_start "backup-repo@pkgbuild.timer"
+
+fi
 
 echo ""
 echo "==============================="
