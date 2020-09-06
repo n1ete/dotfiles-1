@@ -5,7 +5,7 @@ input type:keyboard {
     xkb_layout de-hyper,de
     xkb_options grp:shifts_toggle,caps:hyper,numpad:mac
     xkb_numlock enable
-    xkb_variant nodeadkeys
+    xkb_variant ,nodeadkeys
     xkb_model pc105
 }
 
