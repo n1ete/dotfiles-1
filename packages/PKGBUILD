@@ -316,7 +316,7 @@ depends=(
 
     # misc
     'aria2'
-    'himawaripy-git'
+    'goes16-background-git'
     'android-tools'
     'dmenu-term'
     'fzf'

@@ -1,6 +1,7 @@
 autorandr
 bbswitch-dkms
 blackarch-keyring
+bleachbit
 bolt
 cheat-sh
 darktable
@@ -9,7 +10,6 @@ firejail
 firewarden
 gitleaks
 glfw-wayland
-himawaripy-git
 ifuse
 kanshi
 libplist-git
@@ -21,6 +21,7 @@ nvidia-prime
 opencl-mesa
 optimus-manager
 packer
+pandoc
 parcimonie-sh-git
 powertop
 privoxy

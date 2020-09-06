@@ -113,8 +113,9 @@ link ".config/systemd/user/urlwatch.timer"
 link ".config/systemd/user/waybar.service"
 link ".config/systemd/user/waybar-updates.service"
 link ".config/systemd/user/waybar-updates.timer"
-link ".config/systemd/user/himawaripy.service"
-link ".config/systemd/user/himawaripy.timer"
+link ".config/systemd/user/wluma-als-emulator.service"
+link ".config/systemd/user/goes16-background.service"
+link ".config/systemd/user/goes16-background.timer"
 link ".config/tig"
 link ".config/udiskie"
 link ".config/transmission/settings.json"
@@ -157,7 +158,7 @@ else
     systemctl_enable_start "wluma-als-emulator.service"
     systemctl_enable_start "wluma.service"
     systemctl_enable_start "yubikey-touch-detector.socket"
-    systemctl_enable_start "himawaripy.timer"
+    systemctl_enable_start "goes16-background.timer"
 
     if [[ $HOSTNAME == home-* ]]; then
         if [ -d "$HOME/library/mail" ]; then

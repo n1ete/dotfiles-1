@@ -75,6 +75,7 @@ window#waybar {
 #custom-yubikey,
 #custom-decrypted,
 #custom-systemd,
+#custom-scratchpad
 #custom-updates,
 #custom-mail,
 #network,
@@ -97,4 +98,8 @@ window#waybar {
 
 #tray {
   margin-left: -1000000px;
+}
+
+#custom-progress {
+  border-bottom: 3px solid @purple;
 }
