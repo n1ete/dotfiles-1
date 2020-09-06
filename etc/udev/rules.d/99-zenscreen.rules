@@ -1,0 +1,8 @@
+# Blacklist 0bda:0412
+# This is used in the mb16ac zenscreen to switch displaylink / alt-mode
+# and i only use altmode
+
+##SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="0412", ATTR{authorized}="0"
+
+### authorize all iommu protected devices
+ACTION=="add", SUBSYSTEM=="thunderbolt", ATTRS{iommu_dma_protection}=="1", ATTR{authorized}=="0", ATTR{authorized}="1"

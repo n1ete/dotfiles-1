@@ -1,8 +1,9 @@
+acpi_call-dkms
 autorandr
-bbswitch-dkms
 blackarch-keyring
 bleachbit
 bolt
+bumblebee
 cheat-sh
 darktable
 evdi-git
@@ -10,6 +11,7 @@ firejail
 firewarden
 gitleaks
 glfw-wayland
+goes16-background-git
 ifuse
 kanshi
 libplist-git
@@ -19,12 +21,13 @@ mesa-demos
 myrepos
 nvidia-prime
 opencl-mesa
-optimus-manager
 packer
 pandoc
 parcimonie-sh-git
 powertop
+primus_vk
 privoxy
+python-dateutil
 rmlint-shredder
 signal-desktop
 s-tui
@@ -38,6 +41,7 @@ virtualbox
 virtualbox-host-dkms
 vlc
 vnstat
+vulkan-tools
 wakatime
 wdisplays-git
 weechat
