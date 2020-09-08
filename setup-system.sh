@@ -93,7 +93,6 @@ copy "etc/ssh/ssh_config"
 copy "etc/modules-load.d/pkcs8.conf"
 copy "etc/tlp.conf" 644
 copy "etc/tor/torrc"
-#copy "etc/NetworkManager/dispatcher.d/100vpn"
 copy "etc/NetworkManager/conf.d"
 copy "etc/nmtrust/trusted_units" 644
 copy "etc/nmtrust/excluded_networks" 644
@@ -124,6 +123,15 @@ fi
 (("$reverse"))  && exit 0
 
 echo ""
+echo "==============================="
+echo "Creating top level Trash dir..."
+echo "==============================="
+mkdir --parent /.Trash
+chmod a+rw /.Trash
+chmod +t /.Trash
+echo "Done"
+
+echo ""
 echo "================================="
 echo "Enabling and starting services..."
 echo "================================="
@@ -146,7 +154,6 @@ else
     systemctl_enable_start "btrfs-scrub@var-lib-archbuild.timer"
     systemctl_enable_start "btrfs-scrub@var-lib-docker.timer"
     systemctl_enable_start "NetworkManager.service"
-    #systemctl_enable_start "NetworkManager-dispatcher.service"
     systemctl_enable_start "docker.socket"
     systemctl_enable_start "earlyoom.service"
     systemctl_enable_start "fstrim.timer"
@@ -164,57 +171,48 @@ else
     systemctl_enable_start "usbguard.service"
     systemctl_enable_start "usbguard-dbus.service"
 
-if [ ! -s "/etc/usbguard/rules.conf" ]; then
-    echo >&2 "=== Remember to set usbguard rules: usbguard generate-policy >! /etc/usbguard/rules.conf"
-fi
+    echo ""
+    echo "======================================="
+    echo "Finishing various user configuration..."
+    echo "======================================="
 
-if [ -d "/home/maximbaz/.ccnet" ]; then
-    systemctl_enable_start "seaf-cli@maximbaz.service"
-else
-    echo >&2 "=== Seafile is not initialized, skipping..."
-fi
+    if [ ! -s "/etc/usbguard/rules.conf" ]; then
+        echo >&2 "=== Remember to set usbguard rules: usbguard generate-policy >! /etc/usbguard/rules.conf"
+    fi
 
-if [[ $HOSTNAME == home-* ]]; then
-    systemctl_enable_start "backup-repo@pkgbuild.timer"
+    if [ -d "/home/n1ete/.ccnet" ]; then
+        systemctl_enable_start "seaf-cli@n1ete.service"
+    else
+        echo >&2 "=== Seafile is not initialized, skipping..."
+    fi
 
-fi
+    if [[ $HOSTNAME == home-* ]]; then
+        systemctl_enable_start "backup-repo@pkgbuild.timer"
 
-echo ""
-echo "==============================="
-echo "Creating top level Trash dir..."
-echo "==============================="
-mkdir --parent /.Trash
-chmod a+rw /.Trash
-chmod +t /.Trash
-echo "Done"
+    fi
 
-echo ""
-echo "======================================="
-echo "Finishing various user configuration..."
-echo "======================================="
+    echo "Configuring NTP"
+    timedatectl set-ntp true
+    
+    echo "Configuring aurutils"
+    ln -sf /etc/pacman.conf /usr/share/devtools/pacman-aur.conf
 
-if is_chroot; then
-    echo >&2 "=== Running in chroot, skipping /etc/resolv.conf setup..."
-else
-    echo "Configuring /etc/resolv.conf"
-    ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
-fi
+    if is_chroot; then
+        echo >&2 "=== Running in chroot, skipping udev resolv.conf and firewall setup..."
+    else
+        echo "Configuring firewall"
+        ufw --force reset > /dev/null
+        ufw default allow outgoing
+        ufw default deny incoming
+        ufw enable || true
+        find /etc/ufw -type f -name '*.rules.*' -delete
+        
+        echo "Reload udev rules"
+        udevadm control --reload
+        udevadm trigger
+        
+        echo "Configuring /etc/resolv.conf"
+        ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
-echo "Configuring NTP"
-timedatectl set-ntp true
-
-echo "Configuring aurutils"
-ln -sf /etc/pacman.conf /usr/share/devtools/pacman-aur.conf
-
-if is_chroot; then
-    echo >&2 "=== Running in chroot, skipping firewall setup..."
-else
-    echo "Configuring firewall"
-    ufw --force reset > /dev/null
-    ufw default allow outgoing
-    ufw default deny incoming
-    ufw enable
-    find /etc/ufw -type f -name '*.rules.*' -delete
-
-    sleep 1
+    fi
 fi
