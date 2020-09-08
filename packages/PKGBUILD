@@ -159,6 +159,7 @@ depends=(
     'droidcam'
     'nvidia-dkms'
     'throttled'
+    'fprintd'
 
     # audio
     'pulseaudio'

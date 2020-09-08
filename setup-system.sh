@@ -85,6 +85,7 @@ copy "etc/pacman.d/hooks"
 copy "etc/parcimonie.sh.d/n1ete.conf"
 copy "etc/pam.d/polkit-1"
 copy "etc/pam.d/sudo"
+copy "etc/pam.d/swaylock"
 copy "etc/pulse/default.pa" 644
 copy "etc/snap-pac.conf"
 copy "etc/snapper/configs/root"
@@ -110,6 +111,7 @@ copy "etc/systemd/system/system-dotfiles-sync.timer"
 copy "etc/systemd/system/tor.service.d/override.conf"
 copy "etc/updatedb.conf"
 copy "etc/usbguard/usbguard-daemon.conf" 600
+copy "usr/share/polkit-1/rules.d/50-net.reactivated.fprint.device.enroll.rules"
 
 if [[ $HOSTNAME == home-* ]]; then
     copy "etc/systemd/system/backup-repo@pkgbuild"
