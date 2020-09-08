@@ -11,6 +11,7 @@ zstyle    ':zle:up-line-or-beginning-search'             leave-cursor           
 zstyle    ':zle:down-line-or-beginning-search'           leave-cursor           true
 zstyle    ':z4h:ssh:jukebot'     passthrough             yes
 zstyle    ':z4h:ssh:planet01'     passthrough            yes
+zstyle    ':z4h:ssh:planet01-ha'     passthrough            yes
 zstyle    ':z4h:ssh:talk'     passthrough                yes
 zstyle    ':z4h:ssh:probe'     passthrough               yes
 zstyle    ':z4h:ssh:holo01'     passthrough              yes

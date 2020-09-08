@@ -2,7 +2,7 @@
 path = ~/.config/git/common
 
 [commit]
-gpgsign = true
+gpgsign = false
 
 [user]
 email = schadensregulierung@gmail.com
