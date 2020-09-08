@@ -93,6 +93,8 @@ copy "etc/ssh/ssh_config"
 copy "etc/modules-load.d/pkcs8.conf"
 copy "etc/tlp.conf" 644
 copy "etc/tor/torrc"
+#copy "etc/NetworkManager/dispatcher.d/100vpn"
+copy "etc/NetworkManager/conf.d"
 copy "etc/nmtrust/trusted_units" 644
 copy "etc/nmtrust/excluded_networks" 644
 copy "etc/sudoers.d/override"
@@ -143,6 +145,8 @@ else
     systemctl_enable_start "btrfs-scrub@var-lib-aurbuild.timer"
     systemctl_enable_start "btrfs-scrub@var-lib-archbuild.timer"
     systemctl_enable_start "btrfs-scrub@var-lib-docker.timer"
+    systemctl_enable_start "NetworkManager.service"
+    #systemctl_enable_start "NetworkManager-dispatcher.service"
     systemctl_enable_start "docker.socket"
     systemctl_enable_start "earlyoom.service"
     systemctl_enable_start "fstrim.timer"
