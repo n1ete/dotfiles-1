@@ -45,8 +45,10 @@ p() { ping "${1:-1.1.1.1}" }
 
 tmpd() { cd "$(mktemp -d -t "${1:-tmp}.XXXXXXXXXX")" }
 
-## kubectl
+## networking
+alias pr='ping `netstat -nr| grep -m 1 -iE ‘default|0.0.0.0’ | awk ‘{print $2}’`'
 
+## kubectl
 alias k='kubectl'
 alias kc='kubectx "$(kubectx | fzf --height=10%)"'
 alias kn='kubens "$(kubens | fzf --height=10%)"'

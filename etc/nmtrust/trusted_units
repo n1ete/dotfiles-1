@@ -1,10 +1,10 @@
 goimapnotify@personal.service,user:n1ete
-library-repos.timer,user:n1ete
+#library-repos.timer,user:n1ete
 reflector.timer
-restic-check.timer,user:n1ete
-restic.timer,user:n1ete
+#restic-check.timer,user:n1ete
+#restic.timer,user:n1ete
 sshd.service
-tarsnap.timer,user:n1ete
+#tarsnap.timer,user:n1ete
 tor.service
 vdirsyncer.timer,user:n1ete
 checkmail.timer,user:n1ete

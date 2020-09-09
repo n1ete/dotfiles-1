@@ -20,6 +20,9 @@ mattermost-desktop
 megatools
 mesa-demos
 myrepos
+networkmanager
+networkmanager-dmenu-git
+nmtrust-git
 npm
 nvidia-prime
 opencl-mesa
