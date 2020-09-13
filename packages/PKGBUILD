@@ -125,6 +125,7 @@ depends=(
     'speedtest-cli'
     'wireguard-tools'
     'systemd-resolvconf'
+    'networkmanager-dmenu-git'
 
     # security
     'arch-audit'

@@ -1,11 +1,11 @@
-acpi_call-dkms
 autorandr
 blackarch-keyring
 bleachbit
 bolt
+cheat-git
 cheat-sh
 darktable
-evdi-git
+edk2-ovmf
 firejail
 firewarden
 fprintd
@@ -50,4 +50,3 @@ wdisplays-git
 weechat
 wireless-regdb
 wluma-als-emulator
-xf86-video-intel

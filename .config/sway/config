@@ -160,7 +160,8 @@ bindsym --to-code {
     $hyper+m     fullscreen disable, exec udiskie-dmenu
     $hyper+n     fullscreen disable, exec "pgrep -x dmenu && pkill dmenu || networkmanager_dmenu"
     $win+grave   fullscreen disable, exec wl-clipboard-manager dmenu
-    $hyper+b     fullscreen disable, exec "pgrep -x dmenu && pkill dmenu || browser"
+    $hyper+v     fullscreen disable, exec "pgrep -x dmenu && pkill dmenu || browser"
+    $hyper+b     fullscreen disable, exec "pgrep -x dmenu && pkill dmenu || rofi-bluetooth"
     Print        exec sway-screenshot-area
     $hyper+Print exec sway-gif-area
     $win+Print   exec sway-screenshare
