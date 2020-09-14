@@ -1,3 +1,4 @@
+arch-secure-boot
 autorandr
 blackarch-keyring
 bleachbit
@@ -5,6 +6,7 @@ bolt
 cheat-git
 cheat-sh
 darktable
+ddcutil
 edk2-ovmf
 firejail
 firewarden
@@ -37,6 +39,7 @@ s-tui
 swayidle
 throttled
 torbrowser-launcher
+tpm2-tools
 urlwatch
 vagrant
 vdirsyncer

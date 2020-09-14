@@ -11,3 +11,7 @@ Defaults timestamp_timeout=0
     /usr/bin/mkarchroot, \
     /usr/bin/paccache -vr -c /var/cache/pacman/pkg -c /var/cache/pacman/n1ete-local, \
     /usr/bin/paccache -vruk0 -c /var/cache/pacman/pkg -c /var/cache/pacman/n1ete-local
+    /usr/bin/tlp, \
+    /usr/bin/firejail --list, \
+    /usr/bin/firemon --list, \
+    /usr/local/bin/cpu
