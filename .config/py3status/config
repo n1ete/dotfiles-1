@@ -204,7 +204,7 @@ external_script checkupdates_vcs {
 external_script checkrebuild {
   cache_timeout = 7200
   button_show_notification = 1
-  script_path = "run-on-ac nm-online -t 2 -q && nmtrust -q && run-on-ac checkrebuild | grep cyrinux || true"
+  script_path = "run-on-ac nm-online -t 2 -q && nmtrust -q && run-on-ac checkrebuild | grep n1ete || true"
   format = '[\?if=line [\?color=degraded 󰁂 {lines}]]'
 }
 
