@@ -1,5 +1,5 @@
 pkgname='n1ete'
-pkgver=2.13.0
+pkgver=2.14.0
 pkgrel=1
 pkgdesc='Packages installed by n1ete'
 arch=('any')
@@ -125,7 +125,7 @@ depends=(
     'speedtest-cli'
     'wireguard-tools'
     'systemd-resolvconf'
-    'networkmanager-dmenu-git'
+    #'networkmanager-dmenu-git'
 
     # security
     'arch-audit'
@@ -158,7 +158,7 @@ depends=(
     'upower'
     'acpi'
     'droidcam'
-    'nvidia-dkms'
+    'nvidia'
     'throttled'
     'fprintd'
 

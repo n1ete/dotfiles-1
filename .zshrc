@@ -20,6 +20,7 @@ zstyle    ':z4h:ssh:vbox'     passthrough                yes
 zstyle    ':z4h:ssh:corekeep'     passthrough            yes
 zstyle    ':z4h:ssh:keep'     passthrough                yes
 zstyle    ':z4h:ssh:mufu'     passthrough                yes
+zstyle    ':z4h:ssh:jump'     passthrough                yes
 
 ###
 
