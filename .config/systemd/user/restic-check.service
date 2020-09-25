@@ -1,0 +1,9 @@
+[Unit]
+Description=Check Backup of my laptop
+
+[Service]
+Type=simple
+Nice=19
+IOSchedulingClass=2
+IOSchedulingPriority=7
+ExecStart=%h/.local/bin/restic-check
