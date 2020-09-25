@@ -15,7 +15,6 @@ libu2f-server
 megatools
 mesa-demos
 networkmanager-dmenu-git
-nvidia-dkms
 nvidia-prime
 packer
 pandoc

@@ -3,7 +3,7 @@
 set -e
 exec 2> >(while read line; do echo -e "\e[01;31m$line\e[0m"; done)
 
-MY_GPG_KEY_ID="3129FAE7E854EDEF"
+MY_GPG_KEY_ID="0x3129FAE7E854EDEF"
 
 dotfiles_dir="$(
     cd "$(dirname "$0")"
@@ -95,15 +95,22 @@ link ".config/pylint"
 link ".config/qalculate/qalc.cfg"
 link ".config/qutebrowser"
 link ".config/repoctl"
+link ".config/resticignore"
 link ".config/swappy"
 link ".config/sway"
 link ".config/swaylock"
 link ".config/systemd/user/swayidle.service"
 link ".config/systemd/user/backup-packages.service"
 link ".config/systemd/user/backup-packages.timer"
+link ".config/systemd/user/library-repos.service"
+link ".config/systemd/user/library-repos.timer"
 link ".config/systemd/user/mbsync.service"
 link ".config/systemd/user/mbsync.timer"
 link ".config/systemd/user/polkit-gnome.service"
+link ".config/systemd/user/restic-check.service"
+link ".config/systemd/user/restic-check.timer"
+link ".config/systemd/user/restic.service"
+link ".config/systemd/user/restic.timer"
 link ".config/systemd/user/sway-autoname-workspaces.service"
 link ".config/systemd/user/sway-inactive-window-transparency.service"
 link ".config/systemd/user/sway-session.target"
