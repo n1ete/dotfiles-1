@@ -174,7 +174,6 @@ CacheDir = /mnt/var/cache/pacman/n1ete-local
 EOF
 fi
 
-else
 cat     >> /etc/pacman.conf << EOF
 [maximbaz]
 Server = https://pkgbuild.com/~maximbaz/repo/
