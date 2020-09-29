@@ -3,8 +3,6 @@
 set -e
 exec 2> >(while read line; do echo -e "\e[01;31m$line\e[0m"; done)
 
-MY_GPG_KEY_ID="0x3129FAE7E854EDEF"
-
 script_name="$(basename "$0")"
 dotfiles_dir="$(
     cd "$(dirname "$0")"
@@ -12,7 +10,7 @@ dotfiles_dir="$(
 )"
 cd "$dotfiles_dir"
 
-if (("$EUID")); then
+if (( "$EUID" )); then
     sudo -s "$dotfiles_dir/$script_name" "$@"
     exit 0
 fi
@@ -69,7 +67,7 @@ echo "=========================="
 echo "Setting up /etc configs..."
 echo "=========================="
 copy "etc/udev/rules.d/80-nvidia-pm.rules"
-copy "etc/udev/rules.d/99-zenscreen.rules"
+#copy "etc/udev/rules.d/99-zenscreen.rules"
 copy "etc/modprobe.d/nvidia.conf"
 copy "etc/bluetooth/main.conf"
 copy "etc/conf.d/snapper"
@@ -120,7 +118,7 @@ if [[ $HOSTNAME == home-* ]]; then
     copy "etc/systemd/system/backup-repo@.timer"
 fi
 
-(("$reverse"))  && exit 0
+(( "$reverse" ))&& exit 0
 
 echo ""
 echo "==============================="
