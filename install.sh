@@ -206,7 +206,7 @@ echo "$user:$password" | arch-chroot /mnt chpasswd
 arch-chroot /mnt passwd -dl root
 
 echo -e "\n### Setting permissions on the custom repo"
-arch-chroot /mnt chown -R "$user:$user" /var/cache/pacman/n1ete-local/
+arch-chroot /mnt chown -R "$user:$user" /var/cache/pacman/maximbaz-local/
 
 echo -e "\n### Cloning dotfiles"
 arch-chroot /mnt sudo -u $user bash -c 'git clone --recursive https://github.com/n1ete/dotkob.git ~/.dotfiles'
