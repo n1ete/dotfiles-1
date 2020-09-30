@@ -171,6 +171,7 @@ Server = file:///mnt/var/cache/pacman/n1ete-local
 [options]
 CacheDir = /mnt/var/cache/pacman/pkg
 CacheDir = /mnt/var/cache/pacman/n1ete-local
+CacheDir = /mnt/var/cache/pacman/maximbaz-local/
 EOF
 fi
 
@@ -182,7 +183,7 @@ Usage = Install Sync
 
 [options]
 CacheDir = /var/cache/pacman/pkg
-
+CacheDir = /var/cache/pacman/maximbaz-local/
 EOF
 
 echo -e "\n### Installing packages"
