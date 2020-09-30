@@ -159,32 +159,20 @@ fi
 
 if ! grep maximbaz /etc/pacman.conf > /dev/null; then
     cat >> /etc/pacman.conf << EOF
-[maximbaz]
-Siglevel = Optional
-Server = https://pkgbuild.com/~maximbaz/repo
-Usage = Install Sync
-
 [n1ete-local]
 SigLevel = Optional
 Server = file:///mnt/var/cache/pacman/n1ete-local
-
+[maximbaz-local]
+Server = file:///mnt/var/cache/pacman/maximbaz-local
+[maximbaz]
+Server = https://pkgbuild.com/~maximbaz/repo
 [options]
 CacheDir = /mnt/var/cache/pacman/pkg
 CacheDir = /mnt/var/cache/pacman/n1ete-local
-CacheDir = /mnt/var/cache/pacman/maximbaz-local/
+CacheDir = /mnt/var/cache/pacman/maximbaz-local
+
 EOF
 fi
-
-cat     >> /etc/pacman.conf << EOF
-[maximbaz]
-Server = https://pkgbuild.com/~maximbaz/repo/
-SigLevel = Optional
-Usage = Install Sync
-
-[options]
-CacheDir = /var/cache/pacman/pkg
-CacheDir = /var/cache/pacman/maximbaz-local/
-EOF
 
 echo -e "\n### Installing packages"
 pacstrap -i /mnt maximbaz
