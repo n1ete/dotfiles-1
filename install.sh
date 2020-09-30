@@ -159,18 +159,17 @@ fi
 
 if ! grep maximbaz /etc/pacman.conf > /dev/null; then
     cat >> /etc/pacman.conf << EOF
-[n1ete-local]
-SigLevel = Optional
-Server = file:///mnt/var/cache/pacman/n1ete-local
+#[n1ete-local]
+#SigLevel = Optional
+#Server = file:///mnt/var/cache/pacman/n1ete-local
 [maximbaz-local]
 Server = file:///mnt/var/cache/pacman/maximbaz-local
 [maximbaz]
 Server = https://pkgbuild.com/~maximbaz/repo
 [options]
 CacheDir = /mnt/var/cache/pacman/pkg
-CacheDir = /mnt/var/cache/pacman/n1ete-local
+#CacheDir = /mnt/var/cache/pacman/n1ete-local
 CacheDir = /mnt/var/cache/pacman/maximbaz-local
-
 EOF
 fi
 
