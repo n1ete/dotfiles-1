@@ -144,8 +144,8 @@ mount -o noatime,nodiratime,compress=zstd,subvol=logs /dev/mapper/luks /mnt/var/
 mount -o noatime,nodiratime,compress=zstd,subvol=temp /dev/mapper/luks /mnt/var/tmp
 mount -o noatime,nodiratime,compress=zstd,subvol=snapshots /dev/mapper/luks /mnt/.snapshots
 
-echo -e "\n### Adding blackarch repo"
-curl -sL https://blackarch.org/strap.sh | bash
+#echo -e "\n### Adding blackarch repo"
+#curl -sL https://blackarch.org/strap.sh | bash
 
 echo -e "\n### Configuring custom repo"
 mkdir /mnt/var/cache/pacman/maximbaz-local
