@@ -17,7 +17,7 @@
 #
 # Run installation:
 #
-# - Connect to wifi via: `# wifi-menu`
+# - Connect to wifi via: `# iwctl station wlan0 connect WIFI-NETWORK`
 # - Run: `# bash <(curl -sL https://git.io/maximbaz-install)`
 
 set -uo pipefail
@@ -157,9 +157,6 @@ mount -o noatime,nodiratime,compress=zstd,subvol=logs /dev/mapper/luks /mnt/var/
 mount -o noatime,nodiratime,compress=zstd,subvol=temp /dev/mapper/luks /mnt/var/tmp
 mount -o noatime,nodiratime,compress=zstd,subvol=snapshots /dev/mapper/luks /mnt/.snapshots
 
-#echo -e "\n### Adding blackarch repo"
-#curl -sL https://blackarch.org/strap.sh | bash
-
 echo -e "\n### Configuring custom repo"
 mkdir /mnt/var/cache/pacman/maximbaz-local
 
@@ -172,16 +169,14 @@ fi
 
 if ! grep maximbaz /etc/pacman.conf > /dev/null; then
     cat >> /etc/pacman.conf << EOF
-#[n1ete-local]
-#SigLevel = Optional
-#Server = file:///mnt/var/cache/pacman/n1ete-local
 [maximbaz-local]
 Server = file:///mnt/var/cache/pacman/maximbaz-local
+
 [maximbaz]
 Server = https://pkgbuild.com/~maximbaz/repo
+
 [options]
 CacheDir = /mnt/var/cache/pacman/pkg
-#CacheDir = /mnt/var/cache/pacman/n1ete-local
 CacheDir = /mnt/var/cache/pacman/maximbaz-local
 EOF
 fi
@@ -191,7 +186,6 @@ pacstrap -i /mnt maximbaz
 
 echo -e "\n### Generating base config files"
 ln -sfT dash /mnt/usr/bin/sh
-
 
 cryptsetup luksHeaderBackup "${luks_header_device}" --header-backup-file /tmp/header.img
 luks_header_size="$(stat -c '%s' /tmp/header.img)"
@@ -203,15 +197,20 @@ echo "FONT=$font" > /mnt/etc/vconsole.conf
 genfstab -L /mnt >> /mnt/etc/fstab
 echo "${hostname}" > /mnt/etc/hostname
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
-echo "de_DE.UTF-8 UTF-8" >> /mnt/etc/locale.gen
-ln -sf /usr/share/zoneinfo/Europe/Berlin /mnt/etc/localtime
+echo "en_DK.UTF-8 UTF-8" >> /mnt/etc/locale.gen
+ln -sf /usr/share/zoneinfo/Europe/Copenhagen /mnt/etc/localtime
 arch-chroot /mnt locale-gen
 cat << EOF > /mnt/etc/mkinitcpio.conf
-MODULES=(battery nvme)
+MODULES=()
 BINARIES=()
 FILES=()
-HOOKS=(base consolefont udev autodetect modconf block encrypt filesystems keyboard)
+HOOKS=(base consolefont udev autodetect modconf block encrypt-dh filesystems keyboard)
 EOF
+
+if [ "$device" != "$luks_header_device" ]; then
+    arch-chroot /mnt sed -i "s/encrypt-dh/encrypt/g" /etc/mkinitcpio
+fi 
+    
 arch-chroot /mnt mkinitcpio -p linux
 arch-chroot /mnt arch-secure-boot initial-setup
 
@@ -229,7 +228,7 @@ echo -e "\n### Setting permissions on the custom repo"
 arch-chroot /mnt chown -R "$user:$user" /var/cache/pacman/maximbaz-local/
 
 echo -e "\n### Cloning dotfiles"
-arch-chroot /mnt sudo -u $user bash -c 'git clone --recursive https://github.com/n1ete/dotkob.git ~/.dotfiles'
+arch-chroot /mnt sudo -u $user bash -c 'git clone --recursive https://github.com/maximbaz/dotfiles.git ~/.dotfiles'
 
 echo -e "\n### Running initial setup"
 arch-chroot /mnt /home/$user/.dotfiles/setup-system.sh
