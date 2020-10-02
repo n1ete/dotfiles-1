@@ -120,7 +120,7 @@ part_boot="$(ls ${device}* | grep -E "^${device}p?2$")"
 
 echo -e "\n### Formatting partitions"
 mkfs.vfat -n "EFI" -F32 "${part_boot}"
-echo -n ${password} | cryptsetup luksFormat --type luks2 --pbkdf argon2id --label luks --header "${luks_header_device}" "${part_root}"
+echo -n ${password} | cryptsetup luksFormat --type luks2 --pbkdf argon2id --label=luks --header "${luks_header_device}" "${part_root}"
 echo -n ${password} | cryptsetup luksOpen --header "${luks_header_device}" "${part_root}" luks
 mkfs.btrfs -L btrfs /dev/mapper/luks
 
