@@ -210,7 +210,7 @@ cat << EOF > /mnt/etc/mkinitcpio.conf
 MODULES=(battery nvme)
 BINARIES=()
 FILES=()
-HOOKS=(base consolefont udev autodetect modconf block encrypt-dh filesystems keyboard)
+HOOKS=(base consolefont udev autodetect modconf block encrypt filesystems keyboard)
 EOF
 arch-chroot /mnt mkinitcpio -p linux
 arch-chroot /mnt arch-secure-boot initial-setup
