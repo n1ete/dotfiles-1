@@ -97,11 +97,11 @@ clear
 devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac | tr '\n' ' ')
 read -r -a devicelist <<< $devicelist
 
-luks_header_device=$(get_choice "Installation" "Select disk to write LUKS header to" "${devicelist[@]}") || exit 1
-
+device=$(get_choice "Installation" "Select installation disk" "${devicelist[@]}") || exit 1
 clear
 
-device=$(get_choice "Installation" "Select installation disk" "${devicelist[@]}") || exit 1
+luks_header_device=$(get_choice "Installation" "Select disk to write LUKS header to" "${devicelist[@]}") || exit 1
+
 clear
 
 echo -e "\n### Setting up fastest mirrors"
@@ -113,7 +113,6 @@ cryptsetup luksClose luks 2> /dev/null || true
 
 lsblk -plnx size -o name "${device}" | xargs -n1 wipefs --all
 sgdisk --clear "${device}" --new 1::-551MiB "${device}" --new 2::0 --type 2:ef00 "${device}"
-
 sgdisk --change-name=1:primary --change-name=2:ESP "${device}"
 
 part_root="$(ls ${device}* | grep -E "^${device}p?1$")"
