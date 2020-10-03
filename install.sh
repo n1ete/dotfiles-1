@@ -113,7 +113,7 @@ cryptsetup luksClose luks 2> /dev/null || true
 
 lsblk -plnx size -o name "${device}" | xargs -n1 wipefs --all
 sgdisk --clear "${device}" --new 1::-551MiB "${device}" --new 2::0 --type 2:ef00 "${device}"
-sgdisk --change-name=1:primary --change-name=2:ESP "${device}"
+sgdisk --change-name=1:primary --change-name=2:BOOT "${device}"
 
 part_root="$(ls ${device}* | grep -E "^${device}p?1$")"
 part_boot="$(ls ${device}* | grep -E "^${device}p?2$")"
