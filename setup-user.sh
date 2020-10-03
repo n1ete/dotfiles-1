@@ -156,7 +156,7 @@ else
     systemctl_enable_start "flashfocus.service"
     systemctl_enable_start "gammastep.service"
     systemctl_enable_start "polkit-gnome.service"
-    systemctl_enable_start "swayidle.service"
+    #systemctl_enable_start "swayidle.service"
     systemctl_enable_start "sway-autoname-workspaces.service"
     systemctl_enable_start "sway-inactive-window-transparency.service"
     systemctl_enable_start "systembus-notify.service"
