@@ -145,7 +145,6 @@ depends=(
     'privoxy'
     'torbrowser-launcher'
     'parcimonie-sh-git'
-    'nmtrust-git'
 
     # oom prevention
     'earlyoom'
@@ -159,7 +158,6 @@ depends=(
     'acpi'
     'droidcam'
     'nvidia'
-    'throttled'
     'fprintd'
 
     # audio
@@ -174,7 +172,6 @@ depends=(
 
     # sway
     'sway'
-    'swayidle'
     'swaylock'
     'xorg-server-xwayland'
     'glfw-wayland'
@@ -318,7 +315,7 @@ depends=(
 
     # misc
     'aria2'
-    'goes16-background-git'
+    #'goes16-background-git'
     'android-tools'
     'dmenu-term'
     'fzf'
@@ -334,5 +331,4 @@ depends=(
     'intel-gpu-tools'
     'wev'
     's-tui'
-    'urlwatch'
 )

@@ -7,6 +7,15 @@ gpgsign = false
 [user]
 email = schadensregulierung@gmail.com
 
+[url "ssh://git@github.com/"]
+  insteadOf = https://github.com/
+[url "ssh://git@gitlab.com/"]
+  insteadOf = https://gitlab.com/
+[url "ssh://git@bitbucket.org/"]
+  insteadOf = https://bitbucket.org/
+[url "ssh://git@git.core:10101/"]
+  insteadOf = https://git.core/
+
 #signingkey = 3129FAE7E854EDEF
 # vim:ft=ini
 #[http]

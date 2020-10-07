@@ -1,0 +1,120 @@
+#!/bin/bash
+
+EXCLUDEFILE="/etc/nmtrust/excluded_networks"
+TRUSTFILE="/etc/nmtrust/trusted_networks"
+
+###############################################################################
+
+usage() {
+    echo "Usage: nmtrust [OPTION...]
+Determine if the current NetworkManager connections are trusted.
+
+Options:
+    -e      specify an alternative location for the excluded networks file
+    -t      specify an alternative location for the trusted networks file
+    -q      be quiet"
+}
+
+message() {
+    if [ "$quiet" != true ]; then
+        echo $@
+    fi
+}
+
+file_check() {
+    excludefile_dir=$(dirname "$EXCLUDEFILE")
+    if [ ! -d "$excludefile_dir" ]; then
+        if mkdir -p "$excludefile_dir"; then
+            message "Created configuration directory: $excludefile_dir"
+        else
+            message "Failed to create configuration directory: $excludefile_dir"
+            exit 1
+        fi
+    fi
+    if [ ! -f "$EXCLUDEFILE" ]; then
+        if touch $EXCLUDEFILE; then
+            message "Created empty excluded networks file: $EXCLUDEFILE"
+        else
+            message "Failed to create excluded networks file: $EXCLUDEFILE"
+            exit 1
+        fi
+    fi
+    if [ ! -f "$TRUSTFILE" ]; then
+        message "Could not locate trusted networks file: $TRUSTFILE"
+        exit 1
+    fi
+}
+
+trusted() {
+    message "All connections are trusted"
+    exit 0
+}
+
+all_untrusted() {
+    message "All connections are untrusted"
+    exit 2
+}
+
+untrusted() {
+    message "${1-One or more} connections are untrusted"
+    exit 3
+}
+
+no_network() {
+    message "There are no active connections"
+    exit 4
+}
+
+while getopts ":e:t:qh" opt; do
+    case $opt in
+        e)
+            EXCLUDEFILE=$OPTARG
+            ;;
+        t)
+            TRUSTFILE=$OPTARG
+            ;;
+        q)
+            quiet=true
+            ;;
+        h)
+            usage
+            exit
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument."
+            usage
+            exit 1
+            ;;
+    esac
+done
+
+# Check if the excluded and trusted networks files exist.
+file_check
+
+# Get all active connections.
+mapfile -t connections < <(iwctl station wlan0 show | awk '/Connected network/{print $NF}' )
+
+# Get number of active connections.
+num_connections=$(comm -13 <(sort "$EXCLUDEFILE") <(iwctl station wlan0 show | awk '/Connected network/{print $NF}' | sort) | wc -l)
+
+# Get number of trusted connections.
+num_trusted=$(comm -12 <(iwctl station wlan0 show | awk '/Connected network/{print $NF}' | sort) <(sort "$TRUSTFILE") | wc -l)
+
+# Determine if there are active connections.
+if [ $num_connections -eq 0 ]; then
+    no_network
+# Check if any of the active connections are untrusted.
+elif [[ $num_trusted -eq 0 ]]; then
+    all_untrusted
+else
+    for connection in "${connections[@]}"; do
+        name=$(echo "$connection" | awk -F ":" '{print $1}')
+        uuid=$(echo "$connection" | awk -F ":" '{print $2}')
+        if ! grep -q ^"$name"$ "$EXCLUDEFILE" && ! grep -q ^"$uuid"$ "$TRUSTFILE"; then
+            num_untrusted=$((num_connections - num_trusted))
+            untrusted "$num_untrusted of $num_connections"
+        fi
+    done
+fi
+# If we're still here, all connections are trusted.
+trusted

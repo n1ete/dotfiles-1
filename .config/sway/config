@@ -19,7 +19,7 @@ input type:touchpad {
 seat * hide_cursor 10000
 
 ####set goes16 background
-output "*" bg "/home/n1ete/.cache/goes16background/goes16-latest.png" fit #000000
+output "*" bg "/home/n1ete/.cache/goes16background/goes16-20201007T142018.png" fit #000000
 
 # Gaps
 gaps inner 5
