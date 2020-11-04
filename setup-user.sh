@@ -129,6 +129,7 @@ link ".config/udiskie"
 link ".config/transmission/settings.json"
 link ".config/urlwatch"
 link ".config/USBGuard"
+link ".config/user-tmpfiles.d"
 link ".config/waybar"
 link ".config/wget"
 link ".config/wluma"
@@ -160,6 +161,7 @@ else
     systemctl_enable_start "sway-autoname-workspaces.service"
     systemctl_enable_start "sway-inactive-window-transparency.service"
     systemctl_enable_start "systembus-notify.service"
+    systemctl_enable_start "systemd-tmpfiles-setup.service"
     systemctl_enable_start "udiskie.service"
     systemctl_enable_start "waybar.service"
     systemctl_enable_start "waybar-updates.timer"
@@ -197,7 +199,6 @@ if ! gpg -k | grep "$MY_GPG_KEY_ID" > /dev/null; then
     echo "5\ny\n" | gpg --command-fd 0 --no-tty --batch --edit-key "$MY_GPG_KEY_ID" trust
 fi
 
-find "$HOME/.gnupg" -type f -path "*#*" -delete
 find "$HOME/.gnupg" -type f -not -path "*#*" -exec chmod 600 {} \;
 find "$HOME/.gnupg" -type d -exec chmod 700 {} \;
 

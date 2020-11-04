@@ -19,7 +19,7 @@ input type:touchpad {
 seat * hide_cursor 10000
 
 ####set goes16 background
-output "*" bg "/home/n1ete/.cache/goes16background/goes16-20201007T142018.png" fit #000000
+output "*" bg "/home/n1ete/.cache/goes16background/goes16-*.png" fit #000000
 
 # Gaps
 gaps inner 5
@@ -55,7 +55,7 @@ for_window    [app_id=".*"]                              sticky enable
 for_window    [window_role="pop-up"]                     floating enable
 for_window    [app_id="udiskie"]                         floating enable
 for_window    [class="ksnip"]                            fullscreen enable
-for_window    [app_id="firefox"]                         move container to $workspace2, title_format "Firefox"
+for_window    [app_id="firefox"]                         move container to $workspace1, title_format "Firefox"
 for_window    [class="Wire"]                             move container to $workspace3
 for_window    [app_id="neomutt"]                         move container to $workspace4, title_format "NeoMutt"
 for_window    [title="Firefox - Sharing Indicator"]      floating enable
@@ -150,11 +150,11 @@ mode $mode_workspaces_monitors {
 bindsym --to-code {
     # Terminal
     $hyper+Return exec kitty
-    $win+Return exec kitty
-    $win+Shift+Return exec kitty /bin/bash
+    $win+Return exec kitty --config NONE
+    $win+Shift+Return exec kitty --config NONE /bin/bash
 
     # Launcher
-    $hyper+equal exec bash -c "echo 'enter expression to calculate' | dmenu | xargs -r qalc -t | tee >(wl-copy) >(xargs -I{} notify-send 'calc result' '{}')"
+    $hyper+t exec bash -c "echo 'enter expression to calculate' | dmenu | xargs -r qalc -t | tee >(wl-copy) >(xargs -I{} notify-send 'calc result' '{}')"
     $hyper+d     fullscreen disable, exec wofi
     $hyper+p     fullscreen disable, exec "wl-clipboard-manager lock; passmenu -p pass; wl-clipboard-manager unlock"
     $hyper+m     fullscreen disable, exec udiskie-dmenu

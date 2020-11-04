@@ -1,5 +1,5 @@
 pkgname='n1ete'
-pkgver=2.14.0
+pkgver=2.14.1
 pkgrel=1
 pkgdesc='Packages installed by n1ete'
 arch=('any')
@@ -34,6 +34,7 @@ depends=(
     'linux-firmware'
     'linux-headers'
     'kernel-modules-hook'
+    'mkinitcpio-encrypt-detached-header'
     'logrotate'
     'man-pages'
     'btrfs-progs'
@@ -159,6 +160,7 @@ depends=(
     'droidcam'
     'nvidia'
     'fprintd'
+    'bolt'
 
     # audio
     'pulseaudio'
@@ -247,6 +249,7 @@ depends=(
     # go dev
     'go'
     'go-tools'
+    'gopls'
 
     # js dev
     'yarn'

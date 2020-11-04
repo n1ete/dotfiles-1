@@ -1,26 +1,31 @@
 zstyle    ':z4h:'                                        auto-update            no
 zstyle    ':z4h:*'                                       channel                stable
 zstyle    ':z4h:autosuggestions'                         forward-char           accept
+zstyle    ':z4h:fzf-complete'                            fzf-command            my-fzf
+zstyle    ':z4h:(fzf-complete|cd-down|fzf-history)'      fzf-flags              --no-exact --color=hl:14,hl+:14
+zstyle    ':z4h:(fzf-complete|cd-down)'                  fzf-bindings           'tab:repeat'
+zstyle    ':z4h:(fzf-complete|cd-down)'                  find-flags             -name '.git' -prune -print -o -print
 zstyle    ':z4h:ssh:*'                                   ssh-command            command ssh
 zstyle    ':z4h:ssh:*'                                   send-extra-files       '~/.zsh-aliases'
-zstyle    ':fzf-tab:*'                                   continuous-trigger     tab
-zstyle    ':zle:(up|down)-line-or-beginning-search'      leave-cursor           no
+zstyle    ':zle:(up|down)-line-or-beginning-search'      leave-cursor           yes
 zstyle    ':z4h:term-title:ssh'                          preexec                '%* | %n@%m: ${1//\%/%%}'
 zstyle    ':z4h:term-title:local'                        preexec                '%* | ${1//\%/%%}'
 zstyle    ':zle:up-line-or-beginning-search'             leave-cursor           true
 zstyle    ':zle:down-line-or-beginning-search'           leave-cursor           true
-zstyle    ':z4h:ssh:jukebot'     passthrough             yes
-zstyle    ':z4h:ssh:planet01'     passthrough            yes
-zstyle    ':z4h:ssh:planet01-ha'     passthrough            yes
-zstyle    ':z4h:ssh:talk'     passthrough                yes
-zstyle    ':z4h:ssh:probe'     passthrough               yes
-zstyle    ':z4h:ssh:holo01'     passthrough              yes
-zstyle    ':z4h:ssh:bruno'     passthrough               yes
-zstyle    ':z4h:ssh:vbox'     passthrough                yes
-zstyle    ':z4h:ssh:corekeep'     passthrough            yes
-zstyle    ':z4h:ssh:keep'     passthrough                yes
-zstyle    ':z4h:ssh:mufu'     passthrough                yes
-zstyle    ':z4h:ssh:gw'     passthrough                yes
+zstyle    ':z4h:ssh:*'                                   enable                 yes
+zstyle    ':z4h:ssh:router'                              enable                 no
+zstyle    ':z4h:ssh:jukebot'                             enable                 no
+zstyle    ':z4h:ssh:planet01'                            enable                 no
+zstyle    ':z4h:ssh:planet01-ha'                         enable                 no
+zstyle    ':z4h:ssh:talk*'                               enable                 no
+zstyle    ':z4h:ssh:probe'                               enable                 no
+zstyle    ':z4h:ssh:holo01'                              enable                 no
+zstyle    ':z4h:ssh:bruno'                               enable                 no
+zstyle    ':z4h:ssh:vbox'                                enable                 no
+zstyle    ':z4h:ssh:corekeep'                            enable                 no
+zstyle    ':z4h:ssh:keep'                                enable                 no
+zstyle    ':z4h:ssh:mufu'                                enable                 no
+zstyle    ':z4h:ssh:gw'                                  enable                 no
 
 ###
 
@@ -33,6 +38,12 @@ fpath+=($Z4H/romkatv/archive)
 autoload -Uz archive lsarchive unarchive edit-command-line
 
 zle -N edit-command-line
+
+my-fzf() {
+    emulate -L zsh -o extended_glob
+    local MATCH MBEGIN MEND
+    fzf "${@:/(#m)--query=?*/$MATCH }"
+}
 
 my-ctrl-z() {
     if [[ $#BUFFER -eq 0 ]]; then
@@ -93,12 +104,11 @@ command -v direnv &> /dev/null && eval "$(direnv hook zsh)"
 
 ###
 
-z4h source -c -- /etc/bash_completion.d/azure-cli
-z4h source -c -- /usr/share/LS_COLORS/dircolors.sh
-z4h source -c -- /usr/share/nnn/quitcd/quitcd.bash_zsh
-z4h source -c -- $ZDOTDIR/.zsh-aliases
-z4h source -c -- $ZDOTDIR/.zshrc-private
-z4h source -c -- $ZDOTDIR/zsh-wakatime.plugin.zsh
-z4h compile   -- $ZDOTDIR/{.zshenv,.zprofile,.zshrc,.zlogin,.zlogout}
+z4h source -- /etc/bash_completion.d/azure-cli
+z4h source -- /usr/share/LS_COLORS/dircolors.sh
+z4h source -- /usr/share/nnn/quitcd/quitcd.bash_zsh
+z4h source -- $ZDOTDIR/.zsh-aliases
+z4h source -- $ZDOTDIR/.zshrc-private
+z4h source -- $ZDOTDIR/zsh-wakatime.plugin.zsh
 
 #patch -Np1 -i ~/.dotfiles/z4h.patch -r /dev/null -d $Z4H/zsh4humans/

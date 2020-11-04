@@ -21,7 +21,7 @@ WINDOW_ICONS = {
     "fontforge": "",
     "gcr-prompter": "",
     "kitty": "",
-    "ksnip": "",
+    "org.ksnip.ksnip": "",
     "krita": "",
     "libreoffice-startcenter": "",
     "libreoffice-calc": "",

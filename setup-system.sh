@@ -79,6 +79,7 @@ copy "etc/docker/daemon.json"
 copy "etc/fwupd/uefi.conf"
 copy "etc/modules-load.d/v4l2loopback.conf"
 copy "etc/modprobe.d/v4l2loopback.conf"
+copy "etc/modprobe.d/droidcam.conf"
 copy "etc/pacman.conf" 644
 copy "etc/pacman.d/hooks"
 copy "etc/parcimonie.sh.d/n1ete.conf"

@@ -112,8 +112,8 @@ umount -R /mnt 2> /dev/null || true
 cryptsetup luksClose luks 2> /dev/null || true
 
 lsblk -plnx size -o name "${device}" | xargs -n1 wipefs --all
-sgdisk --clear "${device}" --new 1::-551MiB "${device}" --new 2::0 --type 2:ef00 "${device}"
-sgdisk --change-name=1:primary --change-name=2:BOOT "${device}"
+sgdisk --clear "${device}" --new 1::-551MiB "${device}" --new 2::0 --typecode 2:ef00 "${device}"
+sgdisk --change-name=1:primary --change-name=2:ESP "${device}"
 
 part_root="$(ls ${device}* | grep -E "^${device}p?1$")"
 part_boot="$(ls ${device}* | grep -E "^${device}p?2$")"
@@ -141,20 +141,23 @@ btrfs subvolume create /mnt/archbuild
 btrfs subvolume create /mnt/docker
 btrfs subvolume create /mnt/logs
 btrfs subvolume create /mnt/temp
+btrfs subvolume create /mnt/swap
 btrfs subvolume create /mnt/snapshots
 umount /mnt
 
 mount -o noatime,nodiratime,compress=zstd,subvol=root /dev/mapper/luks /mnt
+mkdir -p /mnt/{mnt/btrfs-root,efi,home,var/{cache/pacman,log,tmp,lib/{aurbuild,archbuild,docker}},swap,.snapshots}
 mkdir -p /mnt/{mnt/btrfs-root,efi,home,var/{cache/pacman,log,tmp,lib/{aurbuild,archbuild,docker}},.snapshots}
 mount "${part_boot}" /mnt/efi
-mount -o noatime,nodiratime,compress=zstd,subvol=/ /dev/mapper/luks /mnt/mnt/btrfs-root
-mount -o noatime,nodiratime,compress=zstd,subvol=home /dev/mapper/luks /mnt/home
-mount -o noatime,nodiratime,compress=zstd,subvol=pkgs /dev/mapper/luks /mnt/var/cache/pacman
-mount -o noatime,nodiratime,compress=zstd,subvol=aurbuild /dev/mapper/luks /mnt/var/lib/aurbuild
+mount -o noatime,nodiratime,compress=zstd,subvol=/         /dev/mapper/luks /mnt/mnt/btrfs-root
+mount -o noatime,nodiratime,compress=zstd,subvol=home      /dev/mapper/luks /mnt/home
+mount -o noatime,nodiratime,compress=zstd,subvol=pkgs      /dev/mapper/luks /mnt/var/cache/pacman
+mount -o noatime,nodiratime,compress=zstd,subvol=aurbuild  /dev/mapper/luks /mnt/var/lib/aurbuild
 mount -o noatime,nodiratime,compress=zstd,subvol=archbuild /dev/mapper/luks /mnt/var/lib/archbuild
-mount -o noatime,nodiratime,compress=zstd,subvol=docker /dev/mapper/luks /mnt/var/lib/docker
-mount -o noatime,nodiratime,compress=zstd,subvol=logs /dev/mapper/luks /mnt/var/log
-mount -o noatime,nodiratime,compress=zstd,subvol=temp /dev/mapper/luks /mnt/var/tmp
+mount -o noatime,nodiratime,compress=zstd,subvol=docker    /dev/mapper/luks /mnt/var/lib/docker
+mount -o noatime,nodiratime,compress=zstd,subvol=logs      /dev/mapper/luks /mnt/var/log
+mount -o noatime,nodiratime,compress=zstd,subvol=temp      /dev/mapper/luks /mnt/var/tmp
+mount -o noatime,nodiratime,compress=zstd,subvol=swap      /dev/mapper/luks /mnt/swap
 mount -o noatime,nodiratime,compress=zstd,subvol=snapshots /dev/mapper/luks /mnt/.snapshots
 
 #echo -e "\n### Adding blackarch repo"
@@ -167,7 +170,7 @@ if [[ "${hostname}" == "home-"* ]]; then
     wget -m -nH -np -q --show-progress --progress=bar:force --reject='index.html*' --cut-dirs=2 -P '/mnt/var/cache/pacman/maximbaz-local' 'https://pkgbuild.com/~maximbaz/repo/'
     rename -- 'maximbaz.' 'maximbaz-local.' /mnt/var/cache/pacman/maximbaz-local/*
 else
-    repo-add /var/cache/pacman/maximbaz-local/maximbaz-local.db.tar
+    repo-add /mnt/var/cache/pacman/maximbaz-local/maximbaz-local.db.tar
 fi
 
 if ! grep maximbaz /etc/pacman.conf > /dev/null; then
@@ -175,14 +178,17 @@ if ! grep maximbaz /etc/pacman.conf > /dev/null; then
 #[n1ete-local]
 #SigLevel = Optional
 #Server = file:///mnt/var/cache/pacman/n1ete-local
+
 [maximbaz-local]
 Server = file:///mnt/var/cache/pacman/maximbaz-local
+
 [maximbaz]
 Server = https://pkgbuild.com/~maximbaz/repo
+
 [options]
 CacheDir = /mnt/var/cache/pacman/pkg
-#CacheDir = /mnt/var/cache/pacman/n1ete-local
 CacheDir = /mnt/var/cache/pacman/maximbaz-local
+#CacheDir = /mnt/var/cache/pacman/n1ete-local
 EOF
 fi
 
@@ -219,6 +225,15 @@ fi
 
 arch-chroot /mnt mkinitcpio -p linux
 arch-chroot /mnt arch-secure-boot initial-setup
+
+echo -e "\n### Configuring swap file"
+truncate -s 0 /mnt/swap/swapfile
+chattr +C /mnt/swap/swapfile
+btrfs property set /mnt/swap/swapfile compression none
+dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count=4096
+chmod 600 /mnt/swap/swapfile
+mkswap /mnt/swap/swapfile
+echo "/swap/swapfile none swap defaults 0 0" >> /mnt/etc/fstab
 
 echo -e "\n### Creating user"
 arch-chroot /mnt useradd -m -s /usr/bin/zsh "$user"

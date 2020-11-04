@@ -34,7 +34,6 @@ alias utc='env TZ=UTC date'
 alias gpg-change-card='gpg-connect-agent "scd serialno" "learn --force" /bye'
 alias send="croc send"
 alias tmux='tmux -f $HOME/.config/tmux/tmux.conf'
-ssh() { z4h ssh "$@" }
 
 function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
 compdef _directories md

@@ -46,17 +46,20 @@ c.qt.args += ["enable-gpu-rasterization", "enable-features=WebRTCPipeWireCapture
 
 # per-domain settings
 config.set("content.register_protocol_handler", True, "*://calendar.google.com")
-config.set("content.register_protocol_handler", True, "*://teams.microsoft.com")
-config.set("content.register_protocol_handler", True, "*://app.slack.com")
-config.set("content.media_capture", True, "*://app.wire.com")
-config.set("content.media_capture", True, "*://teams.microsoft.com")
-config.set("content.media_capture", True, "*://app.slack.com")
+
+config.set("content.register_protocol_handler", True, "*://talk.lilbits.de")
+config.set("content.media.audio_video_capture", True, "*://talk.lilbits.de")
+config.set("content.media.audio_capture", True, "*://talk.lilbits.de")
+config.set("content.media.video_capture", True, "*://talk.lilbits.de")
+config.set("content.desktop_capture", True, "*://talk.lilbits.de")
+
+config.set("content.register_protocol_handler", True, "*://tinycloud.lilbits.de")
 
 # privacy
 c.content.cookies.accept = "no-3rdparty"
 c.content.webrtc_ip_handling_policy = "default-public-interface-only"
 c.content.site_specific_quirks = False
-c.content.headers.user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36"
+c.content.headers.user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36"
 
 
 # urls
@@ -97,6 +100,9 @@ bindings = {
     ",b": "config-cycle colors.webpage.bg '#32302f' 'white'",
     "M": "nop",
     "co": "nop",
+    "<Shift-Escape>": "fake-key <Escape>",
+    "o": "set-cmd-text -s :open -s",
+    "O": "set-cmd-text -s :open -t -s",
 }
 
 for key, bind in bindings.items():

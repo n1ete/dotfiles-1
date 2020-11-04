@@ -372,7 +372,7 @@ bluetooth {
     format_device = '[[\?if=mac=00:0E:DD:06:24:1C  ]'
     format_device += '[\?if=mac=20:74:CF:3B:36:A9  ]'
     format_device += '[\?if=mac=88:BD:45:02:38:3A  ]'
-    format_device += '[\?if=mac=CD:07:D0:2D:BB:D1  ]]'
+    format_device += '[\?if=mac=B8:27:EB:A7:80:96  ]]'
     format_device += '|\?show  {name}'
     color_bad = 'good'
     color_good = 'degraded'
