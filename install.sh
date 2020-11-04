@@ -206,6 +206,7 @@ rm -f /tmp/header.img
 echo "cryptdevice=PARTLABEL=primary:luks:allow-discards cryptheader=LABEL=luks:0:$luks_header_size root=LABEL=btrfs rw rootflags=subvol=root quiet mem_sleep_default=deep" > /mnt/etc/kernel/cmdline
 
 echo "FONT=$font" > /mnt/etc/vconsole.conf
+echo "KEYMAP=de-latin1-nodeadkeys" >> /mnt/etc/vconsole.conf
 genfstab -L /mnt >> /mnt/etc/fstab
 echo "${hostname}" > /mnt/etc/hostname
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
@@ -216,7 +217,7 @@ cat << EOF > /mnt/etc/mkinitcpio.conf
 MODULES=(battery nvme)
 BINARIES=()
 FILES=()
-HOOKS=(base consolefont udev autodetect modconf block encrypt filesystems keyboard)
+HOOKS=(base consolefont udev autodetect keyboard keymap modconf block encrypt filesystems)
 EOF
 
 if [ "$luks_header_device" == "part_root" ]; then
