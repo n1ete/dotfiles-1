@@ -27,6 +27,10 @@ zstyle    ':z4h:ssh:keep'                                enable                 
 zstyle    ':z4h:ssh:mufu'                                enable                 no
 zstyle    ':z4h:ssh:gw'                                  enable                 no
 
+if ! (( P9K_SSH )); then
+    zstyle ':z4h:sudo' term ''
+fi
+
 ###
 
 z4h install romkatv/archive || return
