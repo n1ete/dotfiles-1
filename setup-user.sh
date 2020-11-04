@@ -47,6 +47,8 @@ echo "==========================="
 echo "Setting up user dotfiles..."
 echo "==========================="
 
+link ".gnupg/gpg.conf"
+link ".gnupg/gpg-agent.conf"
 link ".ignore"
 link ".magic"
 link ".mrtrust"
@@ -140,8 +142,6 @@ link ".config/xkb"
 
 link ".local/bin"
 link ".local/share/applications"
-link ".gnupg/gpg.conf"
-link ".gnupg/gpg-agent.conf"
 link ".local/share/qutebrowser/greasemonkey"
 
 if is_chroot; then

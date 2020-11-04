@@ -53,6 +53,18 @@ config.set("content.media.audio_capture", True, "*://talk.lilbits.de")
 config.set("content.media.video_capture", True, "*://talk.lilbits.de")
 config.set("content.desktop_capture", True, "*://talk.lilbits.de")
 
+config.set("content.register_protocol_handler", True, "*://cloud.keenlogics.com")
+config.set("content.media.audio_video_capture", True, "*://cloud.keenlogics.com")
+config.set("content.media.audio_capture", True, "*://cloud.keenlogics.com")
+config.set("content.media.video_capture", True, "*://cloud.keenlogics.com")
+config.set("content.desktop_capture", True, "*://cloud.keenlogics.com")
+
+config.set("content.register_protocol_handler", True, "*://mattermost.keenlogics.com")
+config.set("content.media.audio_video_capture", True, "*://mattermost.keenlogics.com")
+config.set("content.media.audio_capture", True, "*://mattermost.keenlogics.com")
+config.set("content.media.video_capture", True, "*://mattermost.keenlogics.com")
+config.set("content.desktop_capture", True, "*://mattermost.keenlogics.com")
+
 config.set("content.register_protocol_handler", True, "*://tinycloud.lilbits.de")
 
 # privacy
