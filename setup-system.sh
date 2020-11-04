@@ -165,7 +165,7 @@ else
     systemctl_enable_start "systemd-networkd.socket"
     systemctl_enable_start "systemd-resolved.service"
     systemctl_enable_start "tlp.service"
-    systemctl_enable_start "vnstat.service"
+    #systemctl_enable_start "vnstat.service"
     systemctl_enable_start "ufw.service"
     systemctl_enable_start "usbguard.service"
     systemctl_enable_start "usbguard-dbus.service"
