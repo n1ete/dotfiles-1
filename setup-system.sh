@@ -67,7 +67,7 @@ echo "=========================="
 echo "Setting up /etc configs..."
 echo "=========================="
 copy "etc/udev/rules.d/80-nvidia-pm.rules"
-#copy "etc/udev/rules.d/99-zenscreen.rules"
+copy "etc/udev/rules.d/99-zenscreen.rules"
 copy "etc/modprobe.d/blacklist.conf"
 copy "etc/modprobe.d/nvidia.conf"
 copy "etc/bluetooth/main.conf"
@@ -93,7 +93,6 @@ copy "etc/ssh/ssh_config"
 copy "etc/modules-load.d/pkcs8.conf"
 copy "etc/tlp.conf" 644
 copy "etc/tor/torrc"
-copy "etc/NetworkManager/conf.d"
 copy "etc/nmtrust/trusted_units" 644
 copy "etc/nmtrust/excluded_networks" 644
 copy "etc/sudoers.d/override"

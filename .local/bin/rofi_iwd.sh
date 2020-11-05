@@ -23,19 +23,20 @@ fi
 case $script in
     dmenu_*)
         label_interface="interface »"
-        menu_interface="dmenu -l 3 -c -bw 2 -r -i"
+        menu_interface="wofi -dmenu -no-fixed-num-lines -yoffset -100 -i" 
+        # dmenu -l 3 -c -bw 2 -r -i"
         label_ssid="ssid »"
-        menu_ssid="dmenu -l 10 -c -bw 2 -r -i"
+        menu_ssid="wofi -dmenu -no-fixed-num-lines -yoffset -100 -i"
         label_psk="passphrase »"
-        menu_psk="dmenu -l 1 -c -bw 2 -i"
+        menu_psk="wofi -dmenu -no-fixed-num-lines -yoffset -100 -i"
         ;;
     rofi_*)
         label_interface=""
-        menu_interface="wofi -m -1 -l 3 -theme klassiker-center -dmenu -i"
+        menu_interface="wofi -no-fixed-num-lines -yoffset -100 -dmenu -i"
         label_ssid=""
-        menu_ssid="wofi -m -1 -l 10 -theme klassiker-center -dmenu -i"
+        menu_ssid="wofi -no-fixed-num-lines -yoffset -100 -dmenu -i"
         label_psk=""
-        menu_psk="wofi -m -1 -l 1 -theme klassiker-center -dmenu -i"
+        menu_psk="wofi -no-fixed-num-lines -yoffset -100 -dmenu -i"
         ;;
     *)
         printf "%s\n" "$help"

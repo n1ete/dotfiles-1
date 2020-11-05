@@ -11,5 +11,6 @@ oidentd
 pgcli
 python-pexpect
 python-pymysql
+sox
 wireless_tools
 yubioath-desktop

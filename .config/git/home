@@ -1,23 +1,24 @@
-[include]
-path = ~/.config/git/common
+[user]
+  name = n1ete
+  mail = schadensregulierung@gmail.com
 
 [commit]
-gpgsign = false
-
-[user]
-email = schadensregulierung@gmail.com
+  gpgsign = false
 
 [url "ssh://git@github.com/"]
   insteadOf = https://github.com/
+
 [url "ssh://git@gitlab.com/"]
   insteadOf = https://gitlab.com/
+
 [url "ssh://git@bitbucket.org/"]
   insteadOf = https://bitbucket.org/
+
 [url "https://git.core/"]
   #insteadOf = https://git.core/
   #Port = 10101
   sslVerify = false
+
 #signingkey = 3129FAE7E854EDEF
+
 # vim:ft=ini
-[http]
-  sslVerify = false

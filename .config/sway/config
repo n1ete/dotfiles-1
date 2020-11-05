@@ -158,7 +158,7 @@ bindsym --to-code {
     $hyper+d     fullscreen disable, exec wofi
     $hyper+p     fullscreen disable, exec "wl-clipboard-manager lock; passmenu -p pass; wl-clipboard-manager unlock"
     $hyper+m     fullscreen disable, exec udiskie-dmenu
-    $hyper+n     fullscreen disable, exec "pgrep -x dmenu && pkill dmenu || networkmanager_dmenu"
+    $hyper+n     fullscreen disable, exec "pgrep -x dmenu && pkill dmenu || rofi_iwd.sh"
     $win+grave   fullscreen disable, exec wl-clipboard-manager dmenu
     $hyper+v     fullscreen disable, exec "pgrep -x dmenu && pkill dmenu || browser"
     $hyper+b     fullscreen disable, exec "pgrep -x dmenu && pkill dmenu || rofi-bluetooth"

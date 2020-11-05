@@ -19,7 +19,7 @@ case "$1" in
         ;;
     lock)
         before_lock
-        swaylock
+        lockscreenWayland
         ;;
     suspend)
         before_lock

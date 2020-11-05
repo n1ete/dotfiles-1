@@ -62,8 +62,16 @@ default = current
 autostash = true
 autosquash = true
 
-[user]
-name = n1ete
 useConfigOnly = true
+
+[includeIf "gitdir:~/library/hostingde/"]
+    path = ./work
+
+[includeIf "gitdir:~/library/src/"]
+    path = ./home
+[includeIf "gitdir:~/library/projects/"]
+    path = ./home
+[includeIf "gitdir:~/.dotfiles/"]
+    path = ./home
 
 # vim:ft=ini

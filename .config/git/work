@@ -1,10 +1,8 @@
-[include]
-path = ~/.config/git/common
-
 [user]
-email = Maxim.Baz@maersk.com
+	email = j.pavlas@hosting.de
+	name = Jakob Pavlas
 
-[url "git@bitbucket.org:"]
-insteadOf = "https://bitbucket.org/"
+[url "git@atlassian.keenlogics.com:7999"]
+	insteadOf = "https://atlassian.keenlogics.com:7999/"
 
 # vim:ft=ini
