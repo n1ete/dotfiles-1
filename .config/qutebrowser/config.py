@@ -65,6 +65,13 @@ config.set("content.media.audio_capture", True, "*://mattermost.keenlogics.com")
 config.set("content.media.video_capture", True, "*://mattermost.keenlogics.com")
 config.set("content.desktop_capture", True, "*://mattermost.keenlogics.com")
 
+config.set("content.register_protocol_handler", True, "*://teams.microsoft.com")
+config.set("content.media.audio_video_capture", True, "*://teams.microsoft.com")
+config.set("content.media.audio_capture", True, "*://teams.microsoft.com")
+config.set("content.media.video_capture", True, "*://teams.microsoft.com")
+config.set("content.desktop_capture", True, "*://teams.microsoft.com")
+config.set("content.cookies.accept", "all", "*://teams.microsoft.com")
+
 config.set("content.register_protocol_handler", True, "*://tinycloud.lilbits.de")
 
 # privacy

@@ -3,9 +3,7 @@
     "height": 25,
     "modules-left": [
         "sway/workspaces",
-        "custom/scratchpad",
         "sway/mode"
-
     ],
     "modules-right": [
         "custom/progress",
