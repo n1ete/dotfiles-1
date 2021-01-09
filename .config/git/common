@@ -75,3 +75,6 @@ useConfigOnly = true
     path = ./home
 
 # vim:ft=ini
+[user]
+	email = schadensregulierung@gmail.com
+	name = n1ete

@@ -42,7 +42,11 @@ c.spellcheck.languages = ["en-US", "de-DE"]
 c.tabs.background = True
 c.tabs.last_close = "close"
 c.tabs.mousewheel_switching = False
-c.qt.args += ["enable-gpu-rasterization", "enable-features=WebRTCPipeWireCapturer"]
+c.qt.args += ["enable-gpu-rasterization", 
+              "enable-features=WebRTCPipeWireCapturer",
+              "enable-experimental-web-platform-features",
+              "blink-settings=preferredColorScheme=1",
+]
 
 # per-domain settings
 config.set("content.register_protocol_handler", True, "*://calendar.google.com")
@@ -83,7 +87,7 @@ c.content.headers.user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleW
 
 # urls
 c.url.searchengines = {
-    "DEFAULT": "https://duckduckgo.com/?&kn=1&kam=osm&kaj=m&kaq=-1&kao=-1&kau=-1&kp=-2&q={}",
+    "DEFAULT": "https://www.runnaroo.com/search?term={}",
     "dd": "https://duckduckgo.com/?&kn=1&kam=osm&kaj=m&kaq=-1&kao=-1&kau=-1&kp=-2&q={}",
     "e": "https://emojipedia.org/search/?q={}",
     "g": "https://google.com/search?q={}",
@@ -93,6 +97,7 @@ c.url.searchengines = {
     "http": "https://httpstatuses.com/{}",
     "dict": "https://www.dict.cc/?s={}",
     "s": "https://search.levis.ws/?s={}",
+    "rnr": "https://www.runnaroo.com/search?term={}",
 }
 
 c.url.default_page = "~/.config/qutebrowser/blank.html"
