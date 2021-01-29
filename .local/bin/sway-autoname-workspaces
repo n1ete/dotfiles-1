@@ -37,6 +37,7 @@ WINDOW_ICONS = {
     "paperwork": "",
     "pavucontrol": "",
     "peek": "",
+    "qutepreview": "",
     "org.qutebrowser.qutebrowser": "",
     "riot": "",
     "signal": "",

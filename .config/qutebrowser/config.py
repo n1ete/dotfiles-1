@@ -1,4 +1,5 @@
-import os
+config.load_autoconfig(False)
+#import os
 
 # ui
 config.source(os.environ["HOME"] + "/.config/qutebrowser/gruvbox.py")
@@ -24,7 +25,6 @@ c.completion.use_best_match = True
 c.statusbar.widgets = ["progress", "keypress", "url", "history"]
 c.scrolling.bar = "always"
 c.tabs.position = "left"
-c.tabs.width = "15%"
 c.tabs.title.format = "{index}: {audio}{current_title}"
 c.tabs.title.format_pinned = "{index}: {audio}{current_title}"
 
@@ -34,12 +34,14 @@ c.content.default_encoding = "utf-8"
 c.content.javascript.can_access_clipboard = True
 c.content.notifications = True  # notifications aren't supported now anyway
 c.content.pdfjs = True
-c.editor.command = ["kitty", "kak", "-e", "exec {line}g{column0}l", "{file}"]
+c.editor.command = ["kitty", "kak", "-e", "exec {line}g{column0}l", "{}"]
+c.fileselect.handler = "external"
+c.fileselect.single_file.command = ["kitty", "nnn", "-p", "{}"]
+c.fileselect.multiple_files.command = ["kitty", "nnn", "-p", "{}"]
 c.downloads.location.prompt = False
 c.downloads.location.directory = "~/Downloads/"
 c.input.insert_mode.auto_load = True
 c.spellcheck.languages = ["en-US", "de-DE"]
-c.tabs.background = True
 c.tabs.last_close = "close"
 c.tabs.mousewheel_switching = False
 c.qt.args += ["enable-gpu-rasterization", 

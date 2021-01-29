@@ -1,8 +1,8 @@
 [user]
-	email = j.pavlas@hosting.de
-	name = Jakob Pavlas
+	email = user@mail.domain
+	name = user name
 
-[url "git@atlassian.keenlogics.com:7999"]
-	insteadOf = "https://atlassian.keenlogics.com:7999/"
+[url "git@repourl.domain:7999"]
+	insteadOf = "https://repourl.domain:7999/"
 
 # vim:ft=ini

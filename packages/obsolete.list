@@ -4,5 +4,6 @@ electron
 exfat-utils
 expac
 nm-connection-editor
+python-pypeg2
 rust-libslirp
 vnstat

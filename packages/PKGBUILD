@@ -1,5 +1,5 @@
 pkgname='n1ete'
-pkgver=2.14.1
+pkgver=2.16.0
 pkgrel=1
 pkgdesc='Packages installed by n1ete'
 arch=('any')
@@ -97,6 +97,7 @@ depends=(
     'pdftk'
     'inotify-tools'
     'xournalpp'
+    'bfs'
 
     # archiving
     'lbzip2'
@@ -109,7 +110,8 @@ depends=(
 
     # network
     'iwd'
-    'ufw'
+    'nftables'
+    'iptables-nft'
     'bandwhich'
     'net-tools'
     'nmap'
@@ -157,7 +159,8 @@ depends=(
     'dmidecode'
     'upower'
     'acpi'
-    'droidcam'
+    #'droidcam'
+    'iriunwebcam-bin'
     'nvidia'
     'fprintd'
     'bolt'
@@ -173,6 +176,7 @@ depends=(
     'bluez-utils'
 
     # sway
+    'safeeyes'
     'sway'
     'swaylock'
     'xorg-server-xwayland'
@@ -324,8 +328,9 @@ depends=(
     'fzf'
     'calibre'
     'krita'
-    'libqalculate'
+    'qalculate-gtk'
     'libreoffice-fresh'
+    'joplin-appimage'
     'vdirsyncer'
     'transmission-gtk'
     'strace'
@@ -334,4 +339,5 @@ depends=(
     'intel-gpu-tools'
     'wev'
     's-tui'
+    'fava'
 )

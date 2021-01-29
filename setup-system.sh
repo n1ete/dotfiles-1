@@ -76,10 +76,11 @@ copy "etc/iwd/main.conf"
 copy "etc/vnstat.conf"
 copy "etc/default/earlyoom"
 copy "etc/docker/daemon.json"
-copy "etc/fwupd/uefi.conf"
+copy "etc/fwupd/uefi_capsule.conf"
 copy "etc/modules-load.d/v4l2loopback.conf"
 copy "etc/modprobe.d/v4l2loopback.conf"
 copy "etc/modprobe.d/droidcam.conf"
+copy "etc/nftables.conf" 
 copy "etc/pacman.conf" 644
 copy "etc/pacman.d/hooks"
 copy "etc/parcimonie.sh.d/n1ete.conf"
@@ -157,6 +158,7 @@ else
     systemctl_enable_start "fstrim.timer"
     systemctl_enable_start "iwd.service"
     systemctl_enable_start "linux-modules-cleanup.service"
+    systemctl_enable_start "nftables.service"
     systemctl_enable_start "pcscd.socket"
     systemctl_enable_start "reflector.timer"
     systemctl_enable_start "snapper-cleanup.timer"
@@ -194,23 +196,3 @@ else
     
     echo "Configuring aurutils"
     ln -sf /etc/pacman.conf /etc/aurutils/pacman-n1ete-local.conf
-    
-    if is_chroot; then
-        echo >&2 "=== Running in chroot, skipping udev resolv.conf and firewall setup..."
-    else
-        echo "Configuring firewall"
-        ufw --force reset > /dev/null
-        ufw default allow outgoing
-        ufw default deny incoming
-        ufw enable || true
-        find /etc/ufw -type f -name '*.rules.*' -delete
-        
-        echo "Reload udev rules"
-        udevadm control --reload
-        udevadm trigger
-        
-        echo "Configuring /etc/resolv.conf"
-        ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
-
-    fi
-fi

@@ -53,13 +53,15 @@ set $workspace0 workspace number 10
 for_window    [app_id=".*"]                              sticky enable
 for_window    [window_role="pop-up"]                     floating enable
 for_window    [app_id="udiskie"]                         floating enable
-for_window    [class="ksnip"]                            fullscreen enable
-for_window    [app_id="firefox"]                         move container to $workspace1, title_format "Firefox"
-for_window    [class="Wire"]                             move container to $workspace3
 for_window    [app_id="neomutt"]                         move container to $workspace4, title_format "NeoMutt"
-for_window    [title="Firefox - Sharing Indicator"]      floating enable
 for_window    [app_id="dmenu.*"]                         floating enable, resize set width 60ppt height 80ppt
 for_window    [app_id="dmenu-browser"]                   resize set height 20ppt
+for_window    [app_id="dmenu-calc"]                      resize set width 40ppt height 30ppt
+for_window    [app_id="qalculate-gtk"]                   floating enable
+for_window    [app_id="org.qutebrowser.qutebrowser"]     move container to $workspace2
+for_window    [class="Signal"]                           move container to $workspace3
+for_window    [app_id="mpv"]                             floating enable, resize set width 531 height 300, move position 1005 113
+for_window    [app_id="iriunwebcam"]                     floating disable
 
 # Color scheme (Gruvbox dark)
 set $color_normal_white  #a89984
@@ -89,7 +91,7 @@ mode $mode_audio {
     bindsym --to-code {
         s            exec pacmd set-sink-port alsa_output.pci-0000_00_1f.3.analog-stereo analog-output-speaker, mode "default"
         h            exec pacmd set-sink-port alsa_output.pci-0000_00_1f.3.analog-stereo analog-output-headphones, mode "default"
-        b            exec "bluetoothctl disconnect 20:74:CF:37:0B:0B; bluetoothctl connect 20:74:CF:37:0B:0B", mode "default"
+        b            exec "bluetoothctl disconnect; bluetoothctl connect 20:74:CF:37:0B:0B", mode "default"
         Shift+i      exec pacmd set-source-port alsa_input.pci-0000_00_1f.3.analog-stereo analog-input-internal-mic, mode "default"
         Shift+h      exec pacmd set-source-port alsa_input.pci-0000_00_1f.3.analog-stereo analog-input-headset-mic, mode "default"
         Shift+m      exec pacmd set-source-port alsa_input.pci-0000_00_1f.3.analog-stereo analog-input-mic, mode "default"
@@ -153,7 +155,7 @@ bindsym --to-code {
     $win+Shift+Return exec kitty --config NONE /bin/bash
 
     # Launcher
-    $hyper+t exec bash -c "echo 'enter expression to calculate' | dmenu | xargs -r qalc -t | tee >(wl-copy) >(xargs -I{} notify-send 'calc result' '{}')"
+    $hyper+t exec bash -c "pkill -x qalculate-gtk || qalculate-gtk"
     $hyper+d     fullscreen disable, exec wofi
     $hyper+p     fullscreen disable, exec "wl-clipboard-manager lock; passmenu -p pass; wl-clipboard-manager unlock"
     $hyper+m     fullscreen disable, exec udiskie-dmenu

@@ -12,7 +12,11 @@ zstyle    ':z4h:term-title:ssh'                          preexec                
 zstyle    ':z4h:term-title:local'                        preexec                '%* | ${1//\%/%%}'
 zstyle    ':zle:up-line-or-beginning-search'             leave-cursor           true
 zstyle    ':zle:down-line-or-beginning-search'           leave-cursor           true
+zstyle    ':completion:*:ssh:argument-1:'                tag-order              hosts users
+zstyle    ':completion:*:scp:argument-rest:'             tag-order              hosts files users
+zstyle    ':completion:*:(ssh|scp|rdp):*:hosts'          hosts
 zstyle    ':z4h:ssh:*'                                   enable                 yes
+zstyle    ':z4h:ssh:work-*'                              enable                 no
 zstyle    ':z4h:ssh:planet01'                            enable                 no
 zstyle    ':z4h:ssh:planet01-ha'                         enable                 no
 zstyle    ':z4h:ssh:talk*'                               enable                 no

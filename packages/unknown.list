@@ -1,5 +1,6 @@
 android-udev
 aurutils-git
+bfs
 chromium
 dstat
 fava
@@ -7,6 +8,7 @@ filezilla
 gimp
 gnome-disk-utility
 imx_usb_loader-git
+joplin-appimage
 nextcloud-client
 nginx
 oidentd
@@ -16,13 +18,18 @@ python-pexpect
 python-pymysql
 rxvt-unicode
 rxvt-unicode-terminfo
+safeeyes
+shim-signed
 sox
 sshpass
 step-cli
+tableplus
 tcpdump
 testssl.sh
 tinyserial
 whois
+wireless-regdb
 wireless_tools
 wireshark-qt
+wlsunset-git
 yubioath-desktop
