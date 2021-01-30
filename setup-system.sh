@@ -97,7 +97,7 @@ copy "etc/tor/torrc"
 copy "etc/nmtrust/trusted_units" 644
 copy "etc/nmtrust/excluded_networks" 644
 copy "etc/sudoers.d/override"
-copy "etc/sysctl.d/51-tcp-ip-stack.conf"
+#copy "etc/sysctl.d/51-tcp-ip-stack.conf"
 copy "etc/sysctl.d/99-sysctl.conf"
 copy "etc/systemd/journald.conf"
 copy "etc/systemd/logind.conf"
@@ -165,7 +165,7 @@ else
     systemctl_enable_start "system-dotfiles-sync.timer"
     systemctl_enable_start "systemd-networkd.socket"
     systemctl_enable_start "systemd-resolved.service"
-    systemctl_enable_start "tlp.service"
+    #systemctl_enable_start "tlp.service"
     #systemctl_enable_start "vnstat.service"
     systemctl_enable_start "ufw.service"
     systemctl_enable_start "usbguard.service"
@@ -196,3 +196,4 @@ else
     
     echo "Configuring aurutils"
     ln -sf /etc/pacman.conf /etc/aurutils/pacman-n1ete-local.conf
+fi
